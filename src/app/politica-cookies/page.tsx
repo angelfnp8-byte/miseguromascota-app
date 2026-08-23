@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ArticleShell crumb="Política de cookies" title="Política de cookies">
+    <ArticleShell crumb="Política de cookies" title="Política de cookies" showAd={false}>
       <p>
         <em>Última actualización: 23/08/2026.</em>
       </p>

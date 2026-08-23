@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ArticleShell crumb="Sobre nosotros" title="Sobre Mi Seguro Mascota">
+    <ArticleShell crumb="Sobre nosotros" title="Sobre Mi Seguro Mascota" showAd={false}>
       <p>
         Mi Seguro Mascota es un sitio informativo independiente creado para ayudar
         a familias en España a entender cómo funcionan los seguros para mascotas

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ArticleShell crumb="Contacto" title="Contacto">
+    <ArticleShell crumb="Contacto" title="Contacto" showAd={false}>
       <p>
         ¿Has encontrado un error, quieres sugerir un tema o tienes una duda sobre
         el contenido del sitio? Escríbenos y te responderemos lo antes posible.

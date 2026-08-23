@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ArticleShell crumb="Política de privacidad" title="Política de privacidad">
+    <ArticleShell crumb="Política de privacidad" title="Política de privacidad" showAd={false}>
       <p>
         <em>Última actualización: 23/08/2026.</em>
       </p>

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getInsurers } from "@/lib/insurers";
 import { ComparadorClient } from "@/components/comparador/ComparadorClient";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { AD_SLOTS } from "@/lib/adsense";
 
 export const metadata: Metadata = {
   title: "Comparador de seguros para perros y gatos",
@@ -44,6 +46,8 @@ export default async function ComparadorPage() {
       </blockquote>
 
       <ComparadorClient insurers={insurers} />
+
+      <AdSlot slot={AD_SLOTS.contentTop} />
 
       <p className="mt-11 border-t border-(--color-border) pt-4.5 text-[0.82rem] text-(--color-text-light)">
         Los precios mostrados, cuando existen, son orientativos. El precio final

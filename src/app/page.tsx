@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { AD_SLOTS } from "@/lib/adsense";
 
 export const metadata: Metadata = {
   title: "Mi Seguro Mascota — Guías y comparativas de seguros para mascotas en España",
@@ -90,6 +92,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <AdSlot slot={AD_SLOTS.contentTop} />
+
       <section className="py-14">
         <div className="mx-auto max-w-[1120px] px-5">
           <h2>Empieza por aquí</h2>
@@ -133,6 +137,8 @@ export default function HomePage() {
           </blockquote>
         </div>
       </section>
+
+      <AdSlot slot={AD_SLOTS.contentBottom} />
     </>
   );
 }

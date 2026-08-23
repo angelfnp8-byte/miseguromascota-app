@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ArticleShell crumb="Aviso legal" title="Aviso legal">
+    <ArticleShell crumb="Aviso legal" title="Aviso legal" showAd={false}>
       <p>
         <em>Última actualización: 23/08/2026.</em>
       </p>
