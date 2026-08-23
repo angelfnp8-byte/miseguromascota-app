@@ -17,12 +17,13 @@ async function siteUrl() {
 export async function signIn(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
+  const next = String(formData.get("next") ?? "/") || "/";
 
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) return { error: "Email o contraseña incorrectos." };
 
-  redirect("/");
+  redirect(next.startsWith("/") ? next : "/");
 }
 
 export async function signUp(_prev: ActionState, formData: FormData): Promise<ActionState> {
@@ -49,12 +50,15 @@ export async function signUp(_prev: ActionState, formData: FormData): Promise<Ac
   redirect("/registro/confirmacion");
 }
 
-export async function signInWithGoogle() {
+export async function signInWithGoogle(formData: FormData) {
+  const next = String(formData.get("next") ?? "/") || "/";
   const supabase = await createClient();
   const base = await siteUrl();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
-    options: { redirectTo: `${base}/auth/callback` },
+    options: {
+      redirectTo: `${base}/auth/callback?next=${encodeURIComponent(next.startsWith("/") ? next : "/")}`,
+    },
   });
   if (error || !data.url) {
     redirect("/login?error=google");

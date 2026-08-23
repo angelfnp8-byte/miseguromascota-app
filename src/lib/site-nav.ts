@@ -5,6 +5,7 @@ export type NavLink = {
 
 /** Single source of truth for the main nav — header and footer both read from here. */
 export const mainNav: NavLink[] = [
+  { label: "Adopción", href: "/adopcion" },
   { label: "Qué es", href: "/que-es-seguro-mascotas" },
   { label: "Tipos de seguro", href: "/tipos-seguros-mascotas" },
   { label: "Comparador", href: "/comparador" },
@@ -16,6 +17,7 @@ export const mainNav: NavLink[] = [
 ];
 
 export const footerContentLinks: NavLink[] = [
+  { label: "Adopción de mascotas", href: "/adopcion" },
   { label: "Qué es un seguro de mascotas", href: "/que-es-seguro-mascotas" },
   { label: "Tipos de seguro", href: "/tipos-seguros-mascotas" },
   { label: "Comparador de seguros", href: "/comparador" },

@@ -2,18 +2,22 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { signUp, signInWithGoogle, type ActionState } from "../actions";
 
 const initialState: ActionState = { error: null };
 
 export function RegistroForm() {
   const [state, formAction, pending] = useActionState(signUp, initialState);
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next") ?? "/";
 
   return (
     <div className="mx-auto max-w-[420px] px-5 py-14">
       <h1>Crear cuenta</h1>
 
       <form action={signInWithGoogle} className="mt-6">
+        <input type="hidden" name="next" value={next} />
         <button
           type="submit"
           className="w-full rounded-full border-2 border-(--color-border) px-6 py-3 text-center font-semibold text-(--color-text) hover:bg-(--color-secondary-light)"
