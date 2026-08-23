@@ -14,18 +14,31 @@ import { createClient } from "@/lib/supabase/client";
  */
 export function AuthStatus() {
   const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const router = useRouter();
   const supabase = createClient();
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      setUser(data.user);
+    async function loadUser(currentUser: User | null) {
+      setUser(currentUser);
+      if (currentUser) {
+        const { data } = await supabase
+          .from("profiles")
+          .select("is_admin")
+          .eq("id", currentUser.id)
+          .maybeSingle();
+        setIsAdmin(!!data?.is_admin);
+      } else {
+        setIsAdmin(false);
+      }
       setLoaded(true);
-    });
+    }
+
+    supabase.auth.getUser().then(({ data }) => loadUser(data.user));
 
     const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
+      loadUser(session?.user ?? null);
     });
 
     return () => sub.subscription.unsubscribe();
@@ -55,6 +68,14 @@ export function AuthStatus() {
 
   return (
     <div className="flex items-center gap-3">
+      {isAdmin && (
+        <Link
+          href="/admin"
+          className="text-[0.9rem] font-semibold text-(--color-text) hover:text-(--color-primary)"
+        >
+          Admin
+        </Link>
+      )}
       <Link
         href="/mensajes"
         className="text-[0.9rem] font-semibold text-(--color-text) hover:text-(--color-primary)"
