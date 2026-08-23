@@ -17,7 +17,7 @@ export function LogoFooter({ className }: { className?: string }) {
           <stop offset="100%" stopColor="#2BB3A3" />
         </linearGradient>
       </defs>
-      <g transform="translate(10,-10) scale(0.8)">
+      <g transform="translate(-4,16) scale(0.46)">
         <path
           d="M100 14 L166 36 L166 96 C166 140 138 172 100 188 C62 172 34 140 34 96 L34 36 Z"
           fill="url(#logoShieldFooter)"
@@ -31,7 +31,7 @@ export function LogoFooter({ className }: { className?: string }) {
         </g>
       </g>
       <text
-        x="188"
+        x="95"
         y="88"
         fontFamily="'Poppins','Segoe UI',Verdana,Arial,sans-serif"
         fontWeight="700"
