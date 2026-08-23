@@ -72,6 +72,27 @@ export type AnimalPhoto = {
 
 export type AnimalWithPhotos = Animal & { animal_photos: AnimalPhoto[] };
 
+export type ConversationStatus = "active" | "archived";
+
+export type Conversation = {
+  id: string;
+  animal_id: string;
+  owner_user_id: string;
+  interested_user_id: string;
+  status: ConversationStatus;
+  created_at: string;
+  updated_at: string;
+};
+
+export type Message = {
+  id: string;
+  conversation_id: string;
+  sender_id: string;
+  content: string;
+  created_at: string;
+  read_at: string | null;
+};
+
 export type Database = {
   public: {
     Tables: {
@@ -118,6 +139,27 @@ export type Database = {
             referencedColumns: ["id"];
           },
         ];
+      };
+      conversations: {
+        Row: Conversation;
+        Insert: {
+          animal_id: string;
+          owner_user_id: string;
+          interested_user_id: string;
+          status?: ConversationStatus;
+        };
+        Update: Partial<Pick<Conversation, "status">>;
+        Relationships: [];
+      };
+      messages: {
+        Row: Message;
+        Insert: {
+          conversation_id: string;
+          sender_id: string;
+          content: string;
+        };
+        Update: Partial<Pick<Message, "read_at">>;
+        Relationships: [];
       };
     };
     Views: Record<string, never>;

@@ -55,6 +55,12 @@ export function AuthStatus() {
 
   return (
     <div className="flex items-center gap-3">
+      <Link
+        href="/mensajes"
+        className="text-[0.9rem] font-semibold text-(--color-text) hover:text-(--color-primary)"
+      >
+        Mensajes
+      </Link>
       <span className="hidden text-[0.9rem] text-(--color-text-light) sm:inline">{label}</span>
       <button
         type="button"

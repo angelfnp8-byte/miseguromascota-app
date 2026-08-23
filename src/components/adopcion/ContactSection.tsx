@@ -3,23 +3,17 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { startConversation } from "@/app/mensajes/actions";
 
 export function ContactSection({
   animalId,
-  animalName,
-  contactPhone,
-  contactEmail,
   isOwner,
 }: {
   animalId: string;
-  animalName: string;
-  contactPhone: string;
-  contactEmail: string;
   isOwner: boolean;
 }) {
   const [loaded, setLoaded] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
-  const [revealed, setRevealed] = useState(false);
 
   useEffect(() => {
     const supabase = createClient();
@@ -54,27 +48,14 @@ export function ContactSection({
     );
   }
 
-  if (!revealed) {
-    return (
+  return (
+    <form action={startConversation.bind(null, animalId)}>
       <button
-        type="button"
-        onClick={() => setRevealed(true)}
+        type="submit"
         className="w-full rounded-full bg-(--color-primary) px-6 py-3 text-center font-bold text-white hover:bg-(--color-primary-dark)"
       >
         Contactar para adoptar
       </button>
-    );
-  }
-
-  return (
-    <div className="rounded-2xl border border-(--color-border) bg-(--color-surface) p-4 text-[0.92rem]">
-      <p className="mb-2 font-semibold">Contacta con el responsable de {animalName}:</p>
-      <p className="mb-1">
-        Teléfono: <a href={`tel:${contactPhone}`} className="underline">{contactPhone}</a>
-      </p>
-      <p className="mb-0">
-        Email: <a href={`mailto:${contactEmail}`} className="underline">{contactEmail}</a>
-      </p>
-    </div>
+    </form>
   );
 }

@@ -95,13 +95,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           </div>
 
           {animal.status === "available" && (
-            <ContactSection
-              animalId={animal.id}
-              animalName={animal.name}
-              contactPhone={animal.contact_phone}
-              contactEmail={animal.contact_email}
-              isOwner={isOwner}
-            />
+            <ContactSection animalId={animal.id} isOwner={isOwner} />
           )}
         </aside>
       </div>
