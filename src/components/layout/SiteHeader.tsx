@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LogoMark } from "@/components/logo/LogoMark";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { AuthStatus } from "@/components/layout/AuthStatus";
 
 export function SiteHeader() {
   return (
@@ -9,6 +10,9 @@ export function SiteHeader() {
         <Link href="/" aria-label="Mi Seguro Mascota" className="flex items-center">
           <LogoMark />
         </Link>
+        <div className="order-2 flex items-center gap-4 lg:order-3">
+          <AuthStatus />
+        </div>
         <MobileNav />
       </div>
     </header>
