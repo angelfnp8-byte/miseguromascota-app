@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #ff7a45;
+  --color-primary-dark: #e35f2c;
+  --color-secondary: #146c5b;
+  --color-secondary-light: #e8f5f1;
+  --color-bg: #fffaf6;
+  --color-surface: #ffffff;
+  --color-text: #2b2621;
+  --color-text-light: #5c554e;
+  --color-border: #eee0d4;
+  --color-hero-from: #146c5b;
+  --color-hero-to: #0e5346;
+  --color-footer-bg: #1f1b17;
+  --color-footer-text: #cfc7bd;
+  --color-footer-muted: #8f877c;
+  --radius: 14px;
+  --shadow: 0 6px 24px rgba(43, 38, 33, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #ff8a5c;
+    --color-primary-dark: #ffa376;
+    --color-secondary: #4fbfa4;
+    --color-secondary-light: #17332c;
+    --color-bg: #171310;
+    --color-surface: #221c18;
+    --color-text: #f3efe9;
+    --color-text-light: #b9b0a5;
+    --color-border: #3a332c;
+    --color-hero-from: #0e2e27;
+    --color-hero-to: #0a2019;
+    --color-footer-bg: #0f0d0b;
+    --color-footer-text: #cfc7bd;
+    --color-footer-muted: #7a7268;
+  }
+}
+
+@theme inline {
+  --color-brand-primary: var(--color-primary);
+  --color-brand-primary-dark: var(--color-primary-dark);
+  --color-brand-secondary: var(--color-secondary);
+  --color-brand-secondary-light: var(--color-secondary-light);
+  --color-brand-bg: var(--color-bg);
+  --color-brand-surface: var(--color-surface);
+  --color-brand-text: var(--color-text);
+  --color-brand-text-light: var(--color-text-light);
+  --color-brand-border: var(--color-border);
+  --color-brand-footer-bg: var(--color-footer-bg);
+  --color-brand-footer-text: var(--color-footer-text);
+  --color-brand-footer-muted: var(--color-footer-muted);
+  --font-heading: var(--font-poppins);
+  --font-body: var(--font-inter);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body), "Segoe UI", system-ui, sans-serif;
+  line-height: 1.65;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading), "Segoe UI", system-ui, sans-serif;
+  line-height: 1.25;
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ---------- Article / content-page prose ---------- */
+.prose-content h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-top: 2.2em;
+}
+.prose-content h3 {
+  font-size: 1.25rem;
+  margin-top: 1.6em;
+}
+.prose-content p {
+  margin: 0 0 1.1em;
+}
+.prose-content a {
+  color: var(--color-secondary);
+  text-decoration: underline;
+}
+.prose-content ul,
+.prose-content ol {
+  margin: 0 0 1.1em;
+  padding-left: 1.4em;
+}
+.prose-content li {
+  margin-bottom: 0.4em;
+}
+.prose-content blockquote {
+  border-left: 5px solid var(--color-primary);
+  background: var(--color-secondary-light);
+  padding: 16px 20px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin: 24px 0;
+  font-size: 0.98rem;
+}
+.prose-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  background: var(--color-surface);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.prose-content th,
+.prose-content td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.95rem;
+}
+.prose-content th {
+  background: var(--color-secondary);
+  color: white;
+}
+.prose-content tr:last-child td {
+  border-bottom: none;
+}
+.faq-item {
+  border-bottom: 1px solid var(--color-border);
+  padding: 18px 0;
+}
+.faq-item h3 {
+  margin-top: 0;
+}
