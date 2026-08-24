@@ -7,6 +7,7 @@ export type AnimalFilters = {
   breedType?: "definida" | "cruce";
   vaccinated?: VaccinationStatus;
   location?: string;
+  breed?: string;
   minAge?: number;
   maxAge?: number;
   temperament?: string[];
@@ -28,6 +29,9 @@ export async function getAnimals(filters: AnimalFilters = {}): Promise<AnimalWit
     query = query.or(
       `location_city.ilike.%${filters.location}%,location_region.ilike.%${filters.location}%`,
     );
+  }
+  if (filters.breed) {
+    query = query.or(`breed.ilike.%${filters.breed}%,mixed_breeds.ilike.%${filters.breed}%`);
   }
   if (filters.minAge != null) query = query.gte("age_value", filters.minAge);
   if (filters.maxAge != null) query = query.lte("age_value", filters.maxAge);

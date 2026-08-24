@@ -6,6 +6,9 @@ import { animalTypeLabels, genderLabels, vaccinatedLabels } from "@/lib/animal-l
 import type { AnimalType, Gender, VaccinationStatus } from "@/lib/supabase/types";
 import { EmptyStateIllustration } from "@/components/illustrations/EmptyStateIllustration";
 import { FILTERABLE_TEMPERAMENT_TAGS, temperamentLabels } from "@/lib/temperament";
+import { dogBreeds, catBreeds, rabbitBreeds } from "@/lib/breeds";
+
+const allBreeds = [...dogBreeds, ...catBreeds, ...rabbitBreeds];
 
 const adoptionGuides = [
   { label: "Cómo funciona la adopción", href: "/adopcion/como-funciona" },
@@ -44,6 +47,7 @@ export default async function AdopcionPage({
     breedType: (first(params.breedType) as "definida" | "cruce") || undefined,
     vaccinated: (first(params.vaccinated) as VaccinationStatus) || undefined,
     location: first(params.location) || undefined,
+    breed: first(params.breed) || undefined,
     temperament: list(params.temperament),
   };
 
@@ -91,7 +95,7 @@ export default async function AdopcionPage({
         method="get"
         className="mb-8 rounded-2xl border border-(--color-border) bg-(--color-surface) p-5"
       >
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         <label className="flex flex-col gap-1 text-[0.85rem]">
           Tipo
           <select name="type" defaultValue={filters.type ?? ""} className="rounded-lg border border-(--color-border) bg-(--color-bg) px-2 py-2">
@@ -117,12 +121,29 @@ export default async function AdopcionPage({
         </label>
 
         <label className="flex flex-col gap-1 text-[0.85rem]">
-          Raza
+          Tipo de raza
           <select name="breedType" defaultValue={filters.breedType ?? ""} className="rounded-lg border border-(--color-border) bg-(--color-bg) px-2 py-2">
             <option value="">Todas</option>
             <option value="definida">Raza definida</option>
             <option value="cruce">Cruce</option>
           </select>
+        </label>
+
+        <label className="flex flex-col gap-1 text-[0.85rem]">
+          Raza
+          <input
+            type="text"
+            name="breed"
+            list="breed-search-options"
+            defaultValue={filters.breed ?? ""}
+            placeholder="p. ej. Labrador"
+            className="rounded-lg border border-(--color-border) bg-(--color-bg) px-2 py-2"
+          />
+          <datalist id="breed-search-options">
+            {allBreeds.map((breed) => (
+              <option key={breed} value={breed} />
+            ))}
+          </datalist>
         </label>
 
         <label className="flex flex-col gap-1 text-[0.85rem]">

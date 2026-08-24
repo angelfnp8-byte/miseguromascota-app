@@ -5,7 +5,7 @@ import type { TemperamentTag } from "@/lib/temperament";
 
 type YesNo = "si" | "no" | null;
 type Activity = "mucha" | "moderada" | "poca" | null;
-type Company = "carinosa" | "tranquila" | "independiente" | null;
+type Company = "carinosa" | "tranquila" | "independiente" | "jugueton" | null;
 
 type Note = { text: string; tone: "warning" | "positive" };
 
@@ -22,6 +22,7 @@ function computeScore(
     activity: Activity;
     firstPet: YesNo;
     company: Company;
+    aloneHours: YesNo;
   },
 ): { score: number; notes: Note[]; answered: boolean } {
   const notes: Note[] = [];
@@ -98,10 +99,25 @@ function computeScore(
       carinosa: "carinoso",
       tranquila: "tranquilo",
       independiente: "independiente",
+      jugueton: "jugueton",
     };
     if (has(temperament, map[answers.company])) {
       score += 5;
       notes.push({ tone: "positive", text: "Su carácter coincide con lo que buscas." });
+    }
+  }
+
+  if (answers.aloneHours) {
+    answeredCount++;
+    if (answers.aloneHours === "no" && !has(temperament, "se_puede_quedar_solo")) {
+      score -= 10;
+      notes.push({
+        tone: "warning",
+        text: "Indicaste que no puedes dejarlo solo muchas horas, y quien publicó el anuncio no ha confirmado que se quede bien solo.",
+      });
+    } else if (has(temperament, "se_puede_quedar_solo")) {
+      score += 5;
+      notes.push({ tone: "positive", text: "Se puede quedar solo varias horas." });
     }
   }
 
@@ -115,6 +131,7 @@ export function CompatibilityQuiz({ temperament }: { temperament: string[] }) {
   const [activity, setActivity] = useState<Activity>(null);
   const [firstPet, setFirstPet] = useState<YesNo>(null);
   const [company, setCompany] = useState<Company>(null);
+  const [aloneHours, setAloneHours] = useState<YesNo>(null);
 
   const result = useMemo(
     () =>
@@ -125,8 +142,9 @@ export function CompatibilityQuiz({ temperament }: { temperament: string[] }) {
         activity,
         firstPet,
         company,
+        aloneHours,
       }),
-    [temperament, hasDogs, hasCats, hasKids, activity, firstPet, company],
+    [temperament, hasDogs, hasCats, hasKids, activity, firstPet, company, aloneHours],
   );
 
   if (temperament.length === 0) {
@@ -181,6 +199,9 @@ export function CompatibilityQuiz({ temperament }: { temperament: string[] }) {
         <QuizRow label="¿Es la primera mascota que tienes?">
           <YesNoButtons value={firstPet} onChange={setFirstPet} />
         </QuizRow>
+        <QuizRow label="¿Puedes dejarlo solo varias horas al día? (opcional)">
+          <YesNoButtons value={aloneHours} onChange={setAloneHours} />
+        </QuizRow>
         <QuizRow label="¿Qué compañía buscas? (opcional)">
           <div className="flex flex-wrap gap-1.5">
             <ChoiceButton active={company === "carinosa"} onClick={() => setCompany("carinosa")}>
@@ -191,6 +212,9 @@ export function CompatibilityQuiz({ temperament }: { temperament: string[] }) {
             </ChoiceButton>
             <ChoiceButton active={company === "independiente"} onClick={() => setCompany("independiente")}>
               Independiente
+            </ChoiceButton>
+            <ChoiceButton active={company === "jugueton"} onClick={() => setCompany("jugueton")}>
+              Juguetona
             </ChoiceButton>
           </div>
         </QuizRow>

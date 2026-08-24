@@ -1,10 +1,11 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import type { AnimalFormState } from "@/app/adopcion/actions";
 import { animalTypeLabels, genderLabels, vaccinatedLabels } from "@/lib/animal-labels";
 import { temperamentGroups, temperamentLabels } from "@/lib/temperament";
-import type { Animal } from "@/lib/supabase/types";
+import { breedsForType } from "@/lib/breeds";
+import type { Animal, AnimalType } from "@/lib/supabase/types";
 
 const initialState: AnimalFormState = { error: null };
 
@@ -18,12 +19,20 @@ export function AnimalForm({
   submitLabel: string;
 }) {
   const [state, formAction, pending] = useActionState(action, initialState);
+  const [type, setType] = useState<AnimalType | "">(defaultValues?.type ?? "");
+  const breedOptions = type ? breedsForType(type) : [];
 
   return (
     <form action={formAction} encType="multipart/form-data" className="flex flex-col gap-5">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field label="Tipo de animal">
-          <select name="type" required defaultValue={defaultValues?.type ?? ""} className={selectClass}>
+          <select
+            name="type"
+            required
+            value={type}
+            onChange={(e) => setType(e.target.value as AnimalType)}
+            className={selectClass}
+          >
             <option value="" disabled>
               Elige uno
             </option>
@@ -87,7 +96,8 @@ export function AnimalForm({
         <Field label="Nombre de la raza (si la conoces)">
           <input
             name="breed"
-            placeholder="p. ej. Labrador Retriever"
+            list="breed-options"
+            placeholder={breedOptions.length ? "Empieza a escribir…" : "p. ej. Labrador Retriever"}
             defaultValue={defaultValues?.breed ?? ""}
             className={inputClass}
           />
@@ -96,11 +106,18 @@ export function AnimalForm({
         <Field label="Razas del cruce (si las conoces)">
           <input
             name="mixedBreeds"
+            list="breed-options"
             placeholder="p. ej. Labrador + Podenco"
             defaultValue={defaultValues?.mixed_breeds ?? ""}
             className={inputClass}
           />
         </Field>
+
+        <datalist id="breed-options">
+          {breedOptions.map((breed) => (
+            <option key={breed} value={breed} />
+          ))}
+        </datalist>
 
         <Field label="Vacunación">
           <select
