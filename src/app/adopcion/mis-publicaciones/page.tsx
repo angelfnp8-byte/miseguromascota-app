@@ -5,6 +5,7 @@ import { getMyAnimals } from "@/lib/animals";
 import { animalPhotoUrl } from "@/lib/animals";
 import { animalTypeIcons, animalTypeLabels, formatAge } from "@/lib/animal-labels";
 import { deleteAnimal, markAsAdopted, markAsAvailable } from "@/app/adopcion/actions";
+import { EmptyStateIllustration } from "@/components/illustrations/EmptyStateIllustration";
 
 export const metadata: Metadata = {
   title: "Mis publicaciones de adopción",
@@ -28,7 +29,10 @@ export default async function Page() {
       </div>
 
       {animals.length === 0 ? (
-        <p className="text-(--color-text-light)">Todavía no has publicado ningún animal.</p>
+        <div className="rounded-2xl bg-(--color-secondary-light) p-8 text-center text-(--color-text-light)">
+          <EmptyStateIllustration className="mx-auto mb-3 h-28 w-auto" />
+          Todavía no has publicado ningún animal.
+        </div>
       ) : (
         <div className="flex flex-col gap-4">
           {animals.map((animal) => {

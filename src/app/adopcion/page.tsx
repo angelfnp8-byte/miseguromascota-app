@@ -4,6 +4,7 @@ import { getAnimals, type AnimalFilters } from "@/lib/animals";
 import { AnimalCard } from "@/components/adopcion/AnimalCard";
 import { animalTypeLabels, genderLabels, vaccinatedLabels } from "@/lib/animal-labels";
 import type { AnimalType, Gender, VaccinationStatus } from "@/lib/supabase/types";
+import { EmptyStateIllustration } from "@/components/illustrations/EmptyStateIllustration";
 
 export const metadata: Metadata = {
   title: "Adopción de mascotas",
@@ -38,6 +39,7 @@ export default async function AdopcionPage({
     <div className="mx-auto max-w-[1120px] px-5 pt-10 pb-14">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
+          <p className="section-eyebrow">Adopción responsable</p>
           <h1>Adopción de mascotas</h1>
           <p className="mb-0 text-(--color-text-light)">
             {animals.length} animal{animals.length === 1 ? "" : "es"} en adopción ahora mismo.
@@ -134,6 +136,7 @@ export default async function AdopcionPage({
 
       {animals.length === 0 ? (
         <div className="rounded-2xl bg-(--color-secondary-light) p-8 text-center text-(--color-text-light)">
+          <EmptyStateIllustration className="mx-auto mb-3 h-28 w-auto" />
           No hay animales que coincidan con esos filtros ahora mismo.
         </div>
       ) : (

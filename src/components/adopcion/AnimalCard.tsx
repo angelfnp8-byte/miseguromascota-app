@@ -7,7 +7,7 @@ export function AnimalCard({ animal }: { animal: AnimalWithPhotos }) {
   const photo = [...animal.animal_photos].sort((a, b) => a.position - b.position)[0];
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-(--color-border) bg-(--color-surface) shadow-[var(--shadow)]">
+    <article className="overflow-hidden rounded-2xl border border-(--color-border) bg-(--color-surface) shadow-[var(--shadow-sm)] transition-shadow hover:shadow-[var(--shadow)]">
       <div className="aspect-4/3 w-full bg-(--color-secondary-light)">
         {photo ? (
           // eslint-disable-next-line @next/next/no-img-element

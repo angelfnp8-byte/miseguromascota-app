@@ -23,10 +23,8 @@ export default async function ComparadorPage() {
         </Link>{" "}
         / Comparador
       </p>
+      <p className="section-eyebrow">🇪🇸 Mercado: España</p>
       <h1>Comparador de seguros para perros y gatos</h1>
-      <p className="mb-4 mt-4 inline-flex items-center gap-1.5 rounded-full bg-(--color-secondary-light) px-3.5 py-1.5 text-[0.85rem] font-bold text-(--color-secondary)">
-        🇪🇸 Mercado: España
-      </p>
       <p>
         Compara de un vistazo las coberturas de las principales aseguradoras de
         mascotas <strong>disponibles en España</strong>. Esta herramienta{" "}

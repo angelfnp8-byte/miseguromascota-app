@@ -2,6 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { AD_SLOTS } from "@/lib/adsense";
+import { Icon } from "@/components/icons/Icon";
+import { HeroPetsIllustration } from "@/components/illustrations/HeroPetsIllustration";
+import { AdoptionIllustration } from "@/components/illustrations/AdoptionIllustration";
 
 export const metadata: Metadata = {
   title: "Mi Seguro Mascota — Guías y comparativas de seguros para mascotas en España",
@@ -12,61 +15,86 @@ export const metadata: Metadata = {
 
 const startHereCards = [
   {
-    icon: "📘",
+    icon: "book",
     title: "¿Qué es un seguro de mascotas?",
     href: "/que-es-seguro-mascotas",
     description:
       "Cómo funciona, qué suele cubrir y por qué cada vez más familias en España lo contratan.",
   },
   {
-    icon: "🧾",
+    icon: "document",
     title: "Tipos de seguro",
     href: "/tipos-seguros-mascotas",
     description:
       "Responsabilidad civil, accidentes, enfermedad o cobertura completa: diferencias clave.",
   },
   {
-    icon: "🐕🐈",
+    icon: "paw",
     title: "Seguro para perros vs. gatos",
     href: "/seguro-perros-vs-gatos",
     description:
       "Por qué el precio y las coberturas varían según la especie, raza y edad.",
   },
   {
-    icon: "💶",
+    icon: "coin",
     title: "¿Cuánto cuesta?",
     href: "/cuanto-cuesta-seguro-mascota",
     description:
       "Rangos de precios orientativos y los factores que más influyen en la cuota mensual.",
   },
   {
-    icon: "✅",
+    icon: "check",
     title: "Cómo elegir el mejor",
     href: "/como-elegir-seguro-mascota",
     description:
       "Checklist práctico para comparar pólizas sin perderte en la letra pequeña.",
   },
   {
-    icon: "❓",
+    icon: "help",
     title: "Preguntas frecuentes",
     href: "/preguntas-frecuentes",
     description: "Dudas habituales resueltas: edad mínima, preexistencias, carencias y más.",
   },
-];
+] as const;
+
+const adoptionSteps = [
+  {
+    icon: "search",
+    title: "Explora mascotas cerca de ti",
+    description:
+      "Filtra por tipo, edad, género o ubicación entre los animales publicados por particulares y protectoras.",
+  },
+  {
+    icon: "message",
+    title: "Contacta directamente",
+    description:
+      "Escribe a quien ha publicado el anuncio a través de nuestro chat privado, sin intermediarios.",
+  },
+  {
+    icon: "heart",
+    title: "Adopta y dale un hogar",
+    description: "Quedad para conocerse y, si encaja, dale a esa mascota una segunda oportunidad.",
+  },
+] as const;
 
 export default function HomePage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-(--color-hero-from) to-(--color-hero-to) py-16 pb-19 text-white">
-        <div className="mx-auto grid max-w-[1120px] gap-8 px-5 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-(--color-hero-from) to-(--color-hero-to) py-16 pb-19 text-white">
+        <div
+          className="decorative-blob -top-24 -right-24 h-80 w-80 bg-(--color-primary)"
+          aria-hidden
+        />
+        <div className="relative mx-auto grid max-w-[1120px] gap-8 px-5 md:grid-cols-[1.1fr_0.9fr] md:items-center">
           <div>
+            <p className="section-eyebrow text-[#bfe8de]">Seguros · Adopción</p>
             <h1 className="text-[clamp(1.9rem,4vw,2.7rem)] text-white">
-              Entiende el seguro de tu mascota antes de contratarlo
+              Entiende el seguro de tu mascota, y encuéntrale una si aún no la tienes
             </h1>
             <p className="mt-4 max-w-[46ch] text-[1.15rem] text-[#dff2ec]">
               Guías claras y comparativas independientes sobre seguros para perros y
-              gatos en España: coberturas, precios orientativos, exclusiones habituales
-              y cómo elegir sin sorpresas.
+              gatos en España, y un espacio de adopción para que particulares y
+              protectoras encuentren un hogar para sus animales.
             </p>
             <div className="mt-6 flex flex-wrap gap-2.5">
               <Link
@@ -76,36 +104,84 @@ export default function HomePage() {
                 Ver tipos de seguro
               </Link>
               <Link
-                href="/cuanto-cuesta-seguro-mascota"
+                href="/adopcion"
                 className="rounded-full border-2 border-white px-6.5 py-3.5 text-[0.98rem] font-bold text-white hover:bg-white/10"
               >
-                Ver precios orientativos
+                Ver mascotas en adopción
               </Link>
             </div>
           </div>
           <div
             aria-hidden
-            className="rounded-2xl border border-white/20 bg-white/10 p-7 text-center text-[3.4rem]"
+            className="relative rounded-2xl border border-white/20 bg-white/10 p-4"
           >
-            🐶🐱🏥
+            <HeroPetsIllustration className="mx-auto h-auto w-full max-w-[360px]" />
           </div>
         </div>
       </section>
 
       <AdSlot slot={AD_SLOTS.contentTop} />
 
+      <section className="relative overflow-hidden py-16">
+        <div
+          className="decorative-blob -bottom-16 -left-24 h-72 w-72 bg-(--color-secondary-light)"
+          aria-hidden
+        />
+        <div className="relative mx-auto grid max-w-[1120px] items-center gap-10 px-5 md:grid-cols-[0.95fr_1.05fr]">
+          <AdoptionIllustration className="mx-auto h-auto w-full max-w-[380px] md:order-2" />
+          <div className="md:order-1">
+            <p className="section-eyebrow">Adopción responsable</p>
+            <h2>Encuentra a tu próxima mascota, o dale un hogar a quien lo necesita</h2>
+            <p className="max-w-[52ch]">
+              Mi Seguro Mascota también es un espacio de adopción: cualquier persona o
+              protectora puede publicar un animal, y quien busca adoptar puede filtrar
+              por tipo, edad, ubicación y más, y contactar directamente sin
+              intermediarios.
+            </p>
+            <div className="mt-6 grid gap-5 sm:grid-cols-3">
+              {adoptionSteps.map((step, i) => (
+                <div key={step.title}>
+                  <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-full bg-(--color-secondary-light) text-(--color-secondary)">
+                    <Icon name={step.icon} className="h-5.5 w-5.5" />
+                  </div>
+                  <h3 className="mb-1 text-[1rem]">
+                    {i + 1}. {step.title}
+                  </h3>
+                  <p className="mb-0 text-[0.9rem] text-(--color-text-light)">{step.description}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-7 flex flex-wrap gap-2.5">
+              <Link
+                href="/adopcion"
+                className="rounded-full bg-(--color-primary) px-6 py-3 font-bold text-white hover:bg-(--color-primary-dark)"
+              >
+                Ver mascotas en adopción
+              </Link>
+              <Link
+                href="/adopcion/nuevo"
+                className="rounded-full border-2 border-(--color-border) px-6 py-3 font-bold text-(--color-text) hover:bg-(--color-secondary-light)"
+              >
+                Publicar un animal
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-14">
         <div className="mx-auto max-w-[1120px] px-5">
+          <p className="section-eyebrow">Guías sobre seguros</p>
           <h2>Empieza por aquí</h2>
           <div className="mt-7.5 grid grid-cols-1 gap-5.5 sm:grid-cols-2 lg:grid-cols-3">
             {startHereCards.map((card) => (
               <div
                 key={card.href}
-                className="rounded-2xl border border-(--color-border) bg-(--color-surface) p-6.5 shadow-[var(--shadow)]"
+                className="rounded-t-2xl border border-(--color-border) border-t-4 border-t-(--color-primary) bg-(--color-surface) p-6.5 shadow-[var(--shadow-sm)] transition-shadow hover:shadow-[var(--shadow)]"
               >
-                <span aria-hidden className="mb-2.5 block text-[1.8rem]">
-                  {card.icon}
-                </span>
+                <div className="mb-2.5 flex h-11 w-11 items-center justify-center rounded-full bg-(--color-accent-light) text-(--color-primary)">
+                  <Icon name={card.icon} className="h-5.5 w-5.5" />
+                </div>
                 <h3 className="mb-1.5">
                   <Link href={card.href} className="text-(--color-secondary) hover:underline">
                     {card.title}
