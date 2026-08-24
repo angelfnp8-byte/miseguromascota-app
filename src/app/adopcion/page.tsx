@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAnimals, type AnimalFilters } from "@/lib/animals";
 import { AnimalCard } from "@/components/adopcion/AnimalCard";
-import { animalTypeLabels, genderLabels, vaccinatedLabels } from "@/lib/animal-labels";
+import { animalTypeLabels, genderLabels, vaccinatedLabels, ageBracketLabels } from "@/lib/animal-labels";
+import type { AgeBracket } from "@/lib/animal-labels";
 import type { AnimalType, Gender, VaccinationStatus } from "@/lib/supabase/types";
 import { EmptyStateIllustration } from "@/components/illustrations/EmptyStateIllustration";
 import { FILTERABLE_TEMPERAMENT_TAGS, temperamentLabels } from "@/lib/temperament";
@@ -50,6 +51,7 @@ export default async function AdopcionPage({
     vaccinated: (first(params.vaccinated) as VaccinationStatus) || undefined,
     location: first(params.location) || undefined,
     breed: first(params.breed) || undefined,
+    ageBracket: (first(params.ageBracket) as AgeBracket) || undefined,
     temperament: list(params.temperament),
   };
 
@@ -97,7 +99,7 @@ export default async function AdopcionPage({
         method="get"
         className="mb-8 rounded-2xl border border-(--color-border) bg-(--color-surface) p-5"
       >
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
         <label className="flex flex-col gap-1 text-[0.85rem]">
           Tipo
           <select name="type" defaultValue={filters.type ?? ""} className="rounded-lg border border-(--color-border) bg-(--color-bg) px-2 py-2">
@@ -149,6 +151,18 @@ export default async function AdopcionPage({
         </label>
 
         <label className="flex flex-col gap-1 text-[0.85rem]">
+          Edad
+          <select name="ageBracket" defaultValue={filters.ageBracket ?? ""} className="rounded-lg border border-(--color-border) bg-(--color-bg) px-2 py-2">
+            <option value="">Todas</option>
+            {Object.entries(ageBracketLabels).map(([value, label]) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="flex flex-col gap-1 text-[0.85rem]">
           Vacunación
           <select name="vaccinated" defaultValue={filters.vaccinated ?? ""} className="rounded-lg border border-(--color-border) bg-(--color-bg) px-2 py-2">
             <option value="">Todas</option>
@@ -178,18 +192,21 @@ export default async function AdopcionPage({
         </label>
         </div>
 
-        <fieldset className="mt-4 border-t border-(--color-border) pt-4">
-          <legend className="mb-1.5 px-0 text-[0.85rem] font-semibold">Rasgos</legend>
-          <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+        <fieldset className="mt-5 rounded-xl bg-(--color-secondary-light) p-4">
+          <legend className="mb-2 px-0 text-[0.78rem] font-bold uppercase tracking-wide text-(--color-secondary)">
+            Rasgos
+          </legend>
+          <div className="flex flex-wrap gap-2">
             {FILTERABLE_TEMPERAMENT_TAGS.map((tag) => (
-              <label key={tag} className="flex items-center gap-1.5 text-[0.85rem]">
+              <label key={tag}>
                 <input
                   type="checkbox"
                   name="temperament"
                   value={tag}
                   defaultChecked={filters.temperament?.includes(tag)}
+                  className="trait-chip-input"
                 />
-                {temperamentLabels[tag]}
+                <span className="trait-chip">{temperamentLabels[tag]}</span>
               </label>
             ))}
           </div>

@@ -203,22 +203,23 @@ export function AnimalForm({
         <span className="mb-2 block text-[0.9rem] font-semibold">
           Rasgos (opcional, pero ayudan a calcular la compatibilidad con quien adopte)
         </span>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {temperamentGroups.map((group) => (
-            <fieldset key={group.title} className="rounded-xl border border-(--color-border) p-3.5">
-              <legend className="px-1 text-[0.8rem] font-bold text-(--color-text-light)">
+            <fieldset key={group.title} className="rounded-xl bg-(--color-secondary-light) p-3.5">
+              <legend className="px-1 text-[0.75rem] font-bold uppercase tracking-wide text-(--color-secondary)">
                 {group.title}
               </legend>
-              <div className="flex flex-col gap-1.5">
+              <div className="flex flex-wrap gap-1.5">
                 {group.tags.map((tag) => (
-                  <label key={tag} className="flex items-center gap-2 text-[0.88rem]">
+                  <label key={tag}>
                     <input
                       type="checkbox"
                       name="temperament"
                       value={tag}
                       defaultChecked={defaultValues?.temperament?.includes(tag)}
+                      className="trait-chip-input"
                     />
-                    {temperamentLabels[tag]}
+                    <span className="trait-chip">{temperamentLabels[tag]}</span>
                   </label>
                 ))}
               </div>

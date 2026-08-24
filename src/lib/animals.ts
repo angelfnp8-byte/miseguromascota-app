@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { matchesAgeBracket, type AgeBracket } from "@/lib/animal-labels";
 import type { AnimalType, Gender, VaccinationStatus, AnimalWithPhotos } from "@/lib/supabase/types";
 
 export type AnimalFilters = {
@@ -8,8 +9,7 @@ export type AnimalFilters = {
   vaccinated?: VaccinationStatus;
   location?: string;
   breed?: string;
-  minAge?: number;
-  maxAge?: number;
+  ageBracket?: AgeBracket;
   temperament?: string[];
 };
 
@@ -33,8 +33,6 @@ export async function getAnimals(filters: AnimalFilters = {}): Promise<AnimalWit
   if (filters.breed) {
     query = query.or(`breed.ilike.%${filters.breed}%,mixed_breeds.ilike.%${filters.breed}%`);
   }
-  if (filters.minAge != null) query = query.gte("age_value", filters.minAge);
-  if (filters.maxAge != null) query = query.lte("age_value", filters.maxAge);
   if (filters.temperament && filters.temperament.length > 0) {
     query = query.contains("temperament", filters.temperament);
   }
@@ -44,7 +42,15 @@ export async function getAnimals(filters: AnimalFilters = {}): Promise<AnimalWit
     console.error("Error fetching animals:", error.message);
     return [];
   }
-  return (data ?? []) as AnimalWithPhotos[];
+
+  let animals = (data ?? []) as AnimalWithPhotos[];
+  // Age is stored as a value + unit (meses/años), so the bracket comparison
+  // needs to normalize both before comparing — not expressible as a single
+  // Postgrest column filter, done in-memory after the rest of the filters.
+  if (filters.ageBracket) {
+    animals = animals.filter((a) => matchesAgeBracket(a.age_value, a.age_unit, filters.ageBracket!));
+  }
+  return animals;
 }
 
 export async function getAnimalById(id: string): Promise<AnimalWithPhotos | null> {

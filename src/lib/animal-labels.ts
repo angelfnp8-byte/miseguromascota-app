@@ -42,6 +42,32 @@ export function formatAge(value: number, unit: AgeUnit): string {
   return `${value} ${label}`;
 }
 
+export function ageInMonths(value: number, unit: AgeUnit): number {
+  return unit === "anos" ? value * 12 : value;
+}
+
+export type AgeBracket = "cachorro" | "joven" | "adulto" | "senior";
+
+export const ageBracketLabels: Record<AgeBracket, string> = {
+  cachorro: "Cachorro/a (menos de 1 año)",
+  joven: "Joven (1-3 años)",
+  adulto: "Adulto (3-8 años)",
+  senior: "Senior (más de 8 años)",
+};
+
+const ageBracketRangesInMonths: Record<AgeBracket, [number, number]> = {
+  cachorro: [0, 11],
+  joven: [12, 35],
+  adulto: [36, 95],
+  senior: [96, Infinity],
+};
+
+export function matchesAgeBracket(value: number, unit: AgeUnit, bracket: AgeBracket): boolean {
+  const months = ageInMonths(value, unit);
+  const [min, max] = ageBracketRangesInMonths[bracket];
+  return months >= min && months <= max;
+}
+
 export function formatBreed(animal: {
   breed_type: string;
   breed: string | null;
