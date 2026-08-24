@@ -146,13 +146,30 @@ function InsurerCard({ insurer }: { insurer: Insurer }) {
 
       <p className="mb-3 flex-grow text-[0.92rem] text-(--color-text-light)">{insurer.description}</p>
 
-      <p className="mb-3 text-[0.82rem] text-(--color-text-light)">
-        {insurer.rating != null
-          ? `${insurer.rating.toFixed(1)} / 5 (${insurer.rating_count ?? "?"} opiniones${
-              insurer.rating_source ? ` · ${insurer.rating_source}` : ""
-            })`
-          : "No hay suficientes opiniones verificables disponibles."}
-      </p>
+      <div className="mb-3 rounded-xl bg-(--color-secondary-light) p-3">
+        <p className="mb-1.5 text-[0.85rem] font-bold text-(--color-secondary)">
+          {insurer.rating != null
+            ? `⭐ ${insurer.rating.toFixed(1)} / 5 (${insurer.rating_count ?? "?"} opiniones${
+                insurer.rating_source ? ` · ${insurer.rating_source}` : ""
+              })`
+            : "No hay suficientes opiniones verificables disponibles."}
+        </p>
+        {insurer.review_summary_positive && (
+          <p className="mb-1 text-[0.8rem] text-(--color-text-light)">
+            👍 {insurer.review_summary_positive}
+          </p>
+        )}
+        {insurer.review_summary_negative && (
+          <p className="mb-1 text-[0.8rem] text-(--color-text-light)">
+            👎 {insurer.review_summary_negative}
+          </p>
+        )}
+        {insurer.rating != null && insurer.rating_checked_at && (
+          <p className="mb-0 text-[0.7rem] text-(--color-text-light)">
+            Comprobado el {new Date(insurer.rating_checked_at).toLocaleDateString("es-ES")}
+          </p>
+        )}
+      </div>
 
       <a
         href={href}

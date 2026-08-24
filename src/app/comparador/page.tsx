@@ -26,12 +26,13 @@ export default async function ComparadorPage() {
       <p className="section-eyebrow">🇪🇸 Mercado: España</p>
       <h1>Comparador de seguros para perros y gatos</h1>
       <p>
-        Compara de un vistazo las coberturas de las principales aseguradoras de
-        mascotas <strong>disponibles en España</strong>. Esta herramienta{" "}
-        <strong>no calcula ni muestra precios oficiales</strong>: te ayuda a acortar
-        la lista según lo que cubre cada póliza, y te lleva con un enlace directo a
-        la web oficial española de la aseguradora para ver el precio real y
-        completar la solicitud.
+        Compara de un vistazo las coberturas, precios orientativos y valoraciones
+        de las principales aseguradoras de mascotas <strong>disponibles en
+        España</strong>. Cuando mostramos un precio, procede de la propia web
+        oficial de la aseguradora o de cobertura de prensa citando su tarifa de
+        lanzamiento — nunca lo calculamos ni lo estimamos nosotros. Te lleva con
+        un enlace directo a la web oficial para ver el precio final y completar
+        la solicitud.
       </p>
 
       <blockquote className="my-6 rounded-r-2xl border-l-4 border-(--color-primary) bg-(--color-secondary-light) p-5 text-[0.98rem]">
@@ -53,7 +54,11 @@ export default async function ComparadorPage() {
         coberturas, condiciones de contratación y otros factores determinados por la
         aseguradora. Este sitio no es un corredor ni intermediario de seguros y no
         percibe comisión por las contrataciones que puedas realizar en las webs
-        enlazadas salvo que se indique expresamente lo contrario.
+        enlazadas salvo que se indique expresamente lo contrario. Las
+        valoraciones mostradas proceden de Trustpilot y corresponden a la
+        reputación general de cada aseguradora (no a una valoración específica
+        de su seguro de mascotas), en la fecha de comprobación indicada junto a
+        cada una.
       </p>
     </div>
   );
