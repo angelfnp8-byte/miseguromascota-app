@@ -15,6 +15,8 @@ import { ContactSection } from "@/components/adopcion/ContactSection";
 import { CompatibilityQuiz } from "@/components/adopcion/CompatibilityQuiz";
 import { temperamentLabels } from "@/lib/temperament";
 import type { TemperamentTag } from "@/lib/temperament";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { AD_SLOTS } from "@/lib/adsense";
 
 export async function generateMetadata({
   params,
@@ -45,6 +47,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   const photos = [...animal.animal_photos].sort((a, b) => a.position - b.position);
 
   return (
+    <>
     <div className="mx-auto max-w-[860px] px-5 pt-10 pb-14">
       <p className="mb-1.5 text-[0.85rem] text-(--color-text-light)">
         <Link href="/adopcion" className="hover:underline">
@@ -123,6 +126,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         </aside>
       </div>
     </div>
+    <AdSlot slot={AD_SLOTS.contentBottom} />
+    </>
   );
 }
 

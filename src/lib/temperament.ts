@@ -118,6 +118,7 @@ export const FILTERABLE_TEMPERAMENT_TAGS: TemperamentTag[] = [
   "muy_activo",
   "poco_activo",
   "obediente",
+  "aprende_rapido",
   "se_puede_quedar_solo",
 ];
 

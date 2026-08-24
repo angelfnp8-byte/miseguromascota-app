@@ -9,6 +9,8 @@ import { EmptyStateIllustration } from "@/components/illustrations/EmptyStateIll
 import { FILTERABLE_TEMPERAMENT_TAGS, temperamentLabels } from "@/lib/temperament";
 import { dogBreeds, catBreeds, rabbitBreeds } from "@/lib/breeds";
 import { spanishCities, spanishProvinces } from "@/lib/locations";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { AD_SLOTS } from "@/lib/adsense";
 
 const allBreeds = [...dogBreeds, ...catBreeds, ...rabbitBreeds];
 const allLocations = [...new Set([...spanishCities, ...spanishProvinces])];
@@ -58,6 +60,7 @@ export default async function AdopcionPage({
   const animals = await getAnimals(filters);
 
   return (
+    <>
     <div className="mx-auto max-w-[1120px] px-5 pt-10 pb-14">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
@@ -238,5 +241,7 @@ export default async function AdopcionPage({
         </div>
       )}
     </div>
+    <AdSlot slot={AD_SLOTS.contentBottom} />
+    </>
   );
 }
