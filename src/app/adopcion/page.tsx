@@ -43,12 +43,20 @@ export default async function AdopcionPage({
             {animals.length} animal{animals.length === 1 ? "" : "es"} en adopción ahora mismo.
           </p>
         </div>
-        <Link
-          href="/adopcion/nuevo"
-          className="rounded-full bg-(--color-primary) px-6 py-3 font-bold text-white hover:bg-(--color-primary-dark)"
-        >
-          Publicar un animal
-        </Link>
+        <div className="flex flex-wrap gap-2.5">
+          <Link
+            href="/adopcion/mis-publicaciones"
+            className="rounded-full border-2 border-(--color-border) px-6 py-3 font-bold text-(--color-text) hover:bg-(--color-secondary-light)"
+          >
+            Mis anuncios
+          </Link>
+          <Link
+            href="/adopcion/nuevo"
+            className="rounded-full bg-(--color-primary) px-6 py-3 font-bold text-white hover:bg-(--color-primary-dark)"
+          >
+            Publicar un animal
+          </Link>
+        </div>
       </div>
 
       <form
