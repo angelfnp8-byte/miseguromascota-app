@@ -37,6 +37,13 @@ export default function Page() {
           correo electrónico si nos contactas a través del formulario o email de
           contacto.
         </li>
+        <li>
+          <strong>Datos de adopción:</strong> si publicas un anuncio de adopción, los
+          datos de contacto que indiques (teléfono y email) se muestran junto al
+          anuncio. Si contactas para adoptar, guardamos el teléfono y/o email que nos
+          facilites en ese momento, visible únicamente para la persona que publicó ese
+          anuncio, dentro de esa conversación.
+        </li>
       </ul>
 
       <h2>3. Finalidad del tratamiento</h2>

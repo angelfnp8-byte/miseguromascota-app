@@ -5,6 +5,14 @@ import { AnimalCard } from "@/components/adopcion/AnimalCard";
 import { animalTypeLabels, genderLabels, vaccinatedLabels } from "@/lib/animal-labels";
 import type { AnimalType, Gender, VaccinationStatus } from "@/lib/supabase/types";
 import { EmptyStateIllustration } from "@/components/illustrations/EmptyStateIllustration";
+import { FILTERABLE_TEMPERAMENT_TAGS, temperamentLabels } from "@/lib/temperament";
+
+const adoptionGuides = [
+  { label: "Cómo funciona la adopción", href: "/adopcion/como-funciona" },
+  { label: "Adopción segura", href: "/adopcion/adopcion-segura" },
+  { label: "Preguntas frecuentes", href: "/adopcion/preguntas-frecuentes" },
+  { label: "Cuidados los primeros días", href: "/adopcion/cuidados-primeros-dias" },
+];
 
 export const metadata: Metadata = {
   title: "Adopción de mascotas",
@@ -16,6 +24,11 @@ type SearchParams = { [key: string]: string | string[] | undefined };
 
 function first(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;
+}
+
+function list(value: string | string[] | undefined): string[] {
+  if (!value) return [];
+  return Array.isArray(value) ? value : [value];
 }
 
 export default async function AdopcionPage({
@@ -31,6 +44,7 @@ export default async function AdopcionPage({
     breedType: (first(params.breedType) as "definida" | "cruce") || undefined,
     vaccinated: (first(params.vaccinated) as VaccinationStatus) || undefined,
     location: first(params.location) || undefined,
+    temperament: list(params.temperament),
   };
 
   const animals = await getAnimals(filters);
@@ -61,10 +75,23 @@ export default async function AdopcionPage({
         </div>
       </div>
 
+      <div className="mb-6 flex flex-wrap gap-2">
+        {adoptionGuides.map((guide) => (
+          <Link
+            key={guide.href}
+            href={guide.href}
+            className="rounded-full bg-(--color-secondary-light) px-3.5 py-1.5 text-[0.82rem] font-semibold text-(--color-secondary) hover:underline"
+          >
+            {guide.label}
+          </Link>
+        ))}
+      </div>
+
       <form
         method="get"
-        className="mb-8 grid grid-cols-2 gap-3 rounded-2xl border border-(--color-border) bg-(--color-surface) p-5 sm:grid-cols-3 lg:grid-cols-5"
+        className="mb-8 rounded-2xl border border-(--color-border) bg-(--color-surface) p-5"
       >
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         <label className="flex flex-col gap-1 text-[0.85rem]">
           Tipo
           <select name="type" defaultValue={filters.type ?? ""} className="rounded-lg border border-(--color-border) bg-(--color-bg) px-2 py-2">
@@ -120,8 +147,26 @@ export default async function AdopcionPage({
             className="rounded-lg border border-(--color-border) bg-(--color-bg) px-2 py-2"
           />
         </label>
+        </div>
 
-        <div className="col-span-2 flex items-end gap-2 sm:col-span-3 lg:col-span-5">
+        <fieldset className="mt-4 border-t border-(--color-border) pt-4">
+          <legend className="mb-1.5 px-0 text-[0.85rem] font-semibold">Rasgos</legend>
+          <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+            {FILTERABLE_TEMPERAMENT_TAGS.map((tag) => (
+              <label key={tag} className="flex items-center gap-1.5 text-[0.85rem]">
+                <input
+                  type="checkbox"
+                  name="temperament"
+                  value={tag}
+                  defaultChecked={filters.temperament?.includes(tag)}
+                />
+                {temperamentLabels[tag]}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div className="mt-4 flex items-end gap-2">
           <button
             type="submit"
             className="rounded-full bg-(--color-secondary) px-5 py-2 text-[0.9rem] font-bold text-white"

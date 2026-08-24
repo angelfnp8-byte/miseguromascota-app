@@ -12,6 +12,9 @@ import {
   vaccinatedLabels,
 } from "@/lib/animal-labels";
 import { ContactSection } from "@/components/adopcion/ContactSection";
+import { CompatibilityQuiz } from "@/components/adopcion/CompatibilityQuiz";
+import { temperamentLabels } from "@/lib/temperament";
+import type { TemperamentTag } from "@/lib/temperament";
 
 export async function generateMetadata({
   params,
@@ -80,6 +83,22 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
           <h2>Sobre {animal.name}</h2>
           <p className="whitespace-pre-line">{animal.description}</p>
+
+          {animal.temperament && animal.temperament.length > 0 && (
+            <>
+              <h2>Carácter</h2>
+              <div className="flex flex-wrap gap-1.5">
+                {animal.temperament.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-(--color-secondary-light) px-2.5 py-1 text-[0.75rem] font-bold uppercase tracking-wide text-(--color-secondary)"
+                  >
+                    {temperamentLabels[tag as TemperamentTag] ?? tag}
+                  </span>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         <aside className="flex flex-col gap-4">
@@ -93,6 +112,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
               <Dt label="Ubicación" value={`${animal.location_city}, ${animal.location_region}`} />
             </dl>
           </div>
+
+          {animal.status === "available" && !isOwner && (
+            <CompatibilityQuiz temperament={animal.temperament ?? []} />
+          )}
 
           {animal.status === "available" && (
             <ContactSection animalId={animal.id} isOwner={isOwner} />

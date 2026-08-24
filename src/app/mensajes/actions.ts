@@ -12,9 +12,12 @@ export type MessageFormState = { error: string | null };
  * the owner. Reuses the existing thread for that animal+user pair if one
  * already exists (unique constraint), otherwise creates it.
  */
-export async function startConversation(animalId: string) {
+export async function startConversation(animalId: string, formData: FormData) {
   const user = await requireUser(`/adopcion/${animalId}`);
   const supabase = await createClient();
+
+  const phone = String(formData.get("phone") ?? "").trim() || null;
+  const email = String(formData.get("email") ?? "").trim() || user.email || null;
 
   const { data: animal } = await supabase
     .from("animals")
@@ -32,7 +35,13 @@ export async function startConversation(animalId: string) {
     .eq("interested_user_id", user.id)
     .maybeSingle();
 
-  if (existing) redirect(`/mensajes/${existing.id}`);
+  if (existing) {
+    await supabase
+      .from("conversations")
+      .update({ interested_contact_phone: phone, interested_contact_email: email })
+      .eq("id", existing.id);
+    redirect(`/mensajes/${existing.id}`);
+  }
 
   const { data: created, error } = await supabase
     .from("conversations")
@@ -40,6 +49,8 @@ export async function startConversation(animalId: string) {
       animal_id: animalId,
       owner_user_id: animal.owner_user_id,
       interested_user_id: user.id,
+      interested_contact_phone: phone,
+      interested_contact_email: email,
     })
     .select("id")
     .single();

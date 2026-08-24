@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/require-user";
+import { isTemperamentTag } from "@/lib/temperament";
 import type {
   AnimalType,
   AgeUnit,
@@ -33,6 +34,7 @@ type AnimalFieldsInput = {
   description: string;
   contact_phone: string;
   contact_email: string;
+  temperament: string[];
 };
 
 type ParseResult =
@@ -54,6 +56,7 @@ function parseAnimalFields(formData: FormData): ParseResult {
   const description = String(formData.get("description") ?? "").trim();
   const contactPhone = String(formData.get("contactPhone") ?? "").trim();
   const contactEmail = String(formData.get("contactEmail") ?? "").trim();
+  const temperament = [...new Set(formData.getAll("temperament").map(String))].filter(isTemperamentTag);
 
   if (!name) return { ok: false, error: "Indica el nombre del animal." };
   if (!Number.isFinite(ageValue) || ageValue < 0)
@@ -83,6 +86,7 @@ function parseAnimalFields(formData: FormData): ParseResult {
       description,
       contact_phone: contactPhone,
       contact_email: contactEmail,
+      temperament,
     },
   };
 }

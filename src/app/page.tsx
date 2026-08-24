@@ -164,6 +164,12 @@ export default function HomePage() {
               >
                 Publicar un animal
               </Link>
+              <Link
+                href="/adopcion/adopcion-segura"
+                className="rounded-full px-6 py-3 font-bold text-(--color-secondary) hover:underline"
+              >
+                Consejos de adopción segura
+              </Link>
             </div>
           </div>
         </div>

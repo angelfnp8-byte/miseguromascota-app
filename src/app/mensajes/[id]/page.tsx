@@ -37,13 +37,42 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         {conversation.animals?.name ?? "Animal"} · {otherName}
       </h1>
       {conversation.animals && (
-        <p className="mb-6 text-(--color-text-light)">
+        <p className="mb-4 text-(--color-text-light)">
           Sobre el anuncio de{" "}
           <Link href={`/adopcion/${conversation.animals.id}`} className="underline">
             {conversation.animals.name}
           </Link>
         </p>
       )}
+
+      <div className="mb-6 rounded-2xl border border-(--color-border) bg-(--color-secondary-light) p-4">
+        <p className="mb-1.5 text-[0.85rem] font-bold text-(--color-secondary)">Datos de contacto</p>
+        {isOwner ? (
+          conversation.interested_contact_phone || conversation.interested_contact_email ? (
+            <p className="mb-0 text-[0.9rem]">
+              {conversation.interested_contact_phone && <>Tel.: {conversation.interested_contact_phone}<br /></>}
+              {conversation.interested_contact_email && <>Email: {conversation.interested_contact_email}</>}
+            </p>
+          ) : (
+            <p className="mb-0 text-[0.9rem] text-(--color-text-light)">Aún no compartidos.</p>
+          )
+        ) : (
+          conversation.animals && (
+            <p className="mb-0 text-[0.9rem]">
+              Tel.: {conversation.animals.contact_phone}
+              <br />
+              Email: {conversation.animals.contact_email}
+            </p>
+          )
+        )}
+        <p className="mt-2 mb-0 text-[0.78rem] text-(--color-text-light)">
+          Por tu seguridad, quedad siempre en un lugar público y consulta nuestros{" "}
+          <Link href="/adopcion/adopcion-segura" className="underline">
+            consejos de adopción segura
+          </Link>
+          .
+        </p>
+      </div>
 
       <ChatThread conversationId={id} currentUserId={user.id} initialMessages={messages} />
     </div>

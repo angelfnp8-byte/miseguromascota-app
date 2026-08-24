@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { Conversation, Message } from "@/lib/supabase/types";
 
 export type ConversationListItem = Conversation & {
-  animals: { id: string; name: string; type: string } | null;
+  animals: { id: string; name: string; type: string; contact_phone: string; contact_email: string } | null;
   owner: { display_name: string | null } | null;
   interested: { display_name: string | null } | null;
 };
@@ -12,7 +12,7 @@ export async function getConversationsForUser(userId: string): Promise<Conversat
   const { data, error } = await supabase
     .from("conversations")
     .select(
-      "*, animals(id, name, type), owner:profiles!conversations_owner_user_id_fkey(display_name), interested:profiles!conversations_interested_user_id_fkey(display_name)",
+      "*, animals(id, name, type, contact_phone, contact_email), owner:profiles!conversations_owner_user_id_fkey(display_name), interested:profiles!conversations_interested_user_id_fkey(display_name)",
     )
     .or(`owner_user_id.eq.${userId},interested_user_id.eq.${userId}`)
     .order("updated_at", { ascending: false });
@@ -29,7 +29,7 @@ export async function getConversation(id: string): Promise<ConversationListItem 
   const { data, error } = await supabase
     .from("conversations")
     .select(
-      "*, animals(id, name, type), owner:profiles!conversations_owner_user_id_fkey(display_name), interested:profiles!conversations_interested_user_id_fkey(display_name)",
+      "*, animals(id, name, type, contact_phone, contact_email), owner:profiles!conversations_owner_user_id_fkey(display_name), interested:profiles!conversations_interested_user_id_fkey(display_name)",
     )
     .eq("id", id)
     .maybeSingle();

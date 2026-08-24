@@ -4,6 +4,11 @@ const baseUrl = "https://miseguromascota.com";
 
 const publicPaths = [
   "",
+  "/adopcion",
+  "/adopcion/como-funciona",
+  "/adopcion/adopcion-segura",
+  "/adopcion/preguntas-frecuentes",
+  "/adopcion/cuidados-primeros-dias",
   "/que-es-seguro-mascotas",
   "/tipos-seguros-mascotas",
   "/comparador",

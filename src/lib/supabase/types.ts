@@ -59,6 +59,7 @@ export type Animal = {
   contact_phone: string;
   contact_email: string;
   status: AnimalStatus;
+  temperament: string[];
   created_at: string;
   updated_at: string;
 }
@@ -81,6 +82,8 @@ export type Conversation = {
   owner_user_id: string;
   interested_user_id: string;
   status: ConversationStatus;
+  interested_contact_phone: string | null;
+  interested_contact_email: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -117,8 +120,9 @@ export type Database = {
       };
       animals: {
         Row: Animal;
-        Insert: Omit<Animal, "id" | "created_at" | "updated_at" | "status"> & {
+        Insert: Omit<Animal, "id" | "created_at" | "updated_at" | "status" | "temperament"> & {
           status?: AnimalStatus;
+          temperament?: string[];
         };
         Update: Partial<Omit<Animal, "id" | "owner_user_id" | "created_at" | "updated_at">>;
         Relationships: [];
@@ -148,8 +152,12 @@ export type Database = {
           owner_user_id: string;
           interested_user_id: string;
           status?: ConversationStatus;
+          interested_contact_phone?: string | null;
+          interested_contact_email?: string | null;
         };
-        Update: Partial<Pick<Conversation, "status">>;
+        Update: Partial<
+          Pick<Conversation, "status" | "interested_contact_phone" | "interested_contact_email">
+        >;
         Relationships: [];
       };
       messages: {

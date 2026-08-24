@@ -9,6 +9,7 @@ export type AnimalFilters = {
   location?: string;
   minAge?: number;
   maxAge?: number;
+  temperament?: string[];
 };
 
 export async function getAnimals(filters: AnimalFilters = {}): Promise<AnimalWithPhotos[]> {
@@ -30,6 +31,9 @@ export async function getAnimals(filters: AnimalFilters = {}): Promise<AnimalWit
   }
   if (filters.minAge != null) query = query.gte("age_value", filters.minAge);
   if (filters.maxAge != null) query = query.lte("age_value", filters.maxAge);
+  if (filters.temperament && filters.temperament.length > 0) {
+    query = query.contains("temperament", filters.temperament);
+  }
 
   const { data, error } = await query;
   if (error) {

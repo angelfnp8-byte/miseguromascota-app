@@ -21,6 +21,8 @@ type FooterLink = { label: string; href: string };
 
 export const footerContentLinks: FooterLink[] = [
   { label: "Adopción de mascotas", href: "/adopcion" },
+  { label: "Cómo funciona la adopción", href: "/adopcion/como-funciona" },
+  { label: "Adopción segura", href: "/adopcion/adopcion-segura" },
   { label: "Qué es un seguro de mascotas", href: "/que-es-seguro-mascotas" },
   { label: "Tipos de seguro", href: "/tipos-seguros-mascotas" },
   { label: "Comparador de seguros", href: "/comparador" },
