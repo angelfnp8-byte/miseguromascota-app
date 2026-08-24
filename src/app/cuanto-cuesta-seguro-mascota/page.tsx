@@ -14,48 +14,87 @@ export default function Page() {
     <ArticleShell crumb="Precios" title="¿Cuánto cuesta un seguro para mascotas en España?">
       <p>
         El precio de un seguro de mascotas varía mucho según la aseguradora, la
-        cobertura elegida y las características del animal. Estos rangos son{" "}
-        <strong>orientativos</strong> y sirven para hacerte una idea general antes
-        de pedir cotizaciones reales.
+        cobertura elegida y las características del animal. Esta tabla recoge{" "}
+        <strong>ejemplos reales de precio &quot;desde&quot;</strong> publicados por
+        cada aseguradora (o citados por su propia empresa en cobertura de prensa
+        cuando no publican una cifra fija en su web), ordenados de menor a mayor
+        cuota mensual — no son el precio que pagarías tú, que depende de tu
+        mascota y tu perfil, pero dan una idea real del rango del mercado.
       </p>
 
       <table>
         <thead>
           <tr>
-            <th>Tipo de cobertura</th>
-            <th>Rango mensual orientativo</th>
-            <th>Qué determina el precio final</th>
+            <th>Aseguradora</th>
+            <th>Cobertura</th>
+            <th>Desde (orientativo)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Responsabilidad civil básica</td>
-            <td>Desde unos pocos euros/mes</td>
-            <td>Raza, zona, capital asegurado</td>
+            <td>Mapfre</td>
+            <td>Responsabilidad civil</td>
+            <td>2,50 €/mes (30 €/año)</td>
           </tr>
           <tr>
-            <td>Accidentes</td>
-            <td>Rango bajo-medio</td>
-            <td>Edad, tamaño, actividad</td>
+            <td>Caser</td>
+            <td>Responsabilidad civil</td>
+            <td>3,90 €/mes</td>
           </tr>
           <tr>
-            <td>Enfermedad</td>
-            <td>Rango medio</td>
-            <td>Raza, historial, edad</td>
+            <td>Línea Directa</td>
+            <td>Esencial (básica)</td>
+            <td>3,33 €/mes (39,90 €/año)</td>
           </tr>
           <tr>
-            <td>Completa / todo incluido</td>
-            <td>Rango medio-alto</td>
-            <td>Cobertura, franquicia, extras incluidos</td>
+            <td>Allianz</td>
+            <td>Responsabilidad civil</td>
+            <td>4,25 €/mes (51 €/año)</td>
+          </tr>
+          <tr>
+            <td>Línea Directa</td>
+            <td>Completo</td>
+            <td>5,83 €/mes (69,90 €/año)</td>
+          </tr>
+          <tr>
+            <td>Allianz</td>
+            <td>Completo (con visitas veterinarias)</td>
+            <td>6,08 €/mes (73 €/año)</td>
+          </tr>
+          <tr>
+            <td>ASISA</td>
+            <td>Salud básica (accidentes)</td>
+            <td>9,90 €/mes</td>
+          </tr>
+          <tr>
+            <td>petolo</td>
+            <td>Salud completa (Confort)</td>
+            <td>16,90 €/mes</td>
+          </tr>
+          <tr>
+            <td>Barkibu</td>
+            <td>Salud completa</td>
+            <td>20 €/mes aprox.</td>
+          </tr>
+          <tr>
+            <td>petolo</td>
+            <td>Salud completa (Premium)</td>
+            <td>26,90 €/mes</td>
+          </tr>
+          <tr>
+            <td>petolo</td>
+            <td>Salud completa (Premium Plus)</td>
+            <td>38,90 €/mes</td>
           </tr>
         </tbody>
       </table>
 
       <blockquote>
-        Estos rangos son ilustrativos y no proceden de una aseguradora concreta: los
-        precios reales cambian constantemente según la compañía, la campaña
-        comercial y el perfil exacto de la mascota. Usa siempre un comparador o
-        solicita presupuestos directos para cifras actualizadas.
+        Estos son precios de entrada de cada aseguradora en la modalidad indicada,
+        con fecha de comprobación 24/08/2026 — no incluyen extras, pueden variar por
+        campaña comercial y cambian con el tiempo. Consulta la ficha de cada una en
+        el <Link href="/comparador">comparador</Link> para ver más detalle y el
+        enlace directo a su web oficial.
       </blockquote>
 
       <h2>Factores que más mueven el precio</h2>
