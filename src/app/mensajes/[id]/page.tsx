@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/require-user";
 import { getConversation, getMessages, markConversationRead } from "@/lib/chat";
 import { ChatThread } from "@/components/mensajes/ChatThread";
+import { ReportConversationForm } from "@/components/mensajes/ReportConversationForm";
+import { deleteConversation } from "@/app/mensajes/actions";
 
 export const metadata: Metadata = {
   title: "Conversación",
@@ -29,11 +31,21 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
   return (
     <div className="mx-auto max-w-[720px] px-5 pt-10 pb-14">
-      <p className="mb-1.5 text-[0.85rem] text-(--color-text-light)">
-        <Link href="/mensajes" className="hover:underline">
-          Mensajes
-        </Link>
-      </p>
+      <div className="mb-1.5 flex items-center justify-between gap-3">
+        <p className="mb-0 text-[0.85rem] text-(--color-text-light)">
+          <Link href="/mensajes" className="hover:underline">
+            Mensajes
+          </Link>
+        </p>
+        <form action={deleteConversation.bind(null, id)}>
+          <button
+            type="submit"
+            className="text-[0.85rem] font-semibold text-red-600 underline"
+          >
+            Eliminar conversación
+          </button>
+        </form>
+      </div>
       <h1>
         {conversation.animals?.name ?? "Animal"} · {otherName}
       </h1>
@@ -76,6 +88,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       </div>
 
       <ChatThread conversationId={id} currentUserId={user.id} initialMessages={messages} />
+
+      <div className="mt-4">
+        <ReportConversationForm conversationId={id} />
+      </div>
     </div>
   );
 }

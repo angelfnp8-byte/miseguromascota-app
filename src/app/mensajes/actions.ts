@@ -107,6 +107,84 @@ export async function sendMessage(
   return { error: null };
 }
 
+export async function deleteConversation(conversationId: string) {
+  const user = await requireUser("/mensajes");
+  const supabase = await createClient();
+
+  await supabase
+    .from("conversations")
+    .delete()
+    .eq("id", conversationId)
+    .or(`owner_user_id.eq.${user.id},interested_user_id.eq.${user.id}`);
+
+  revalidatePath("/mensajes");
+  redirect("/mensajes");
+}
+
+const REPORT_RECIPIENT = "angelfnp8@gmail.com";
+
+export type ReportFormState = { error: string | null; success: boolean };
+
+export async function reportConversation(
+  conversationId: string,
+  _prev: ReportFormState,
+  formData: FormData,
+): Promise<ReportFormState> {
+  const user = await requireUser(`/mensajes/${conversationId}`);
+  const reason = String(formData.get("reason") ?? "").trim();
+  const details = String(formData.get("details") ?? "").trim();
+
+  if (!reason) return { error: "Elige un motivo.", success: false };
+
+  const supabase = await createClient();
+  const { data: conversationRow } = await supabase
+    .from("conversations")
+    .select("*, animals(name)")
+    .eq("id", conversationId)
+    .maybeSingle();
+  const conversation = conversationRow as unknown as
+    | (Conversation & { animals: { name: string } | null })
+    | null;
+
+  if (!conversation) return { error: "No se pudo enviar el reporte.", success: false };
+  const isOwner = conversation.owner_user_id === user.id;
+  if (!isOwner && conversation.interested_user_id !== user.id) {
+    return { error: "No se pudo enviar el reporte.", success: false };
+  }
+
+  const reportedId = isOwner ? conversation.interested_user_id : conversation.owner_user_id;
+
+  try {
+    const admin = createAdminClient();
+    const [{ data: reportedData }, { data: reportedProfile }] = await Promise.all([
+      admin.auth.admin.getUserById(reportedId),
+      supabase.from("profiles").select("display_name").eq("id", reportedId).maybeSingle(),
+    ]);
+
+    const base = await siteUrl();
+    const link = `${base}/mensajes/${conversationId}`;
+
+    await sendEmail({
+      to: REPORT_RECIPIENT,
+      subject: `Reporte de conversación: ${conversation.animals?.name ?? "animal"}`,
+      html: `
+        <p><strong>Motivo:</strong> ${reason}</p>
+        <p><strong>Detalles:</strong> ${details || "(sin detalles)"}</p>
+        <p><strong>Reportado por:</strong> ${user.email} (id: ${user.id})</p>
+        <p><strong>Cuenta reportada:</strong> ${reportedProfile?.display_name ?? "Usuario"} —
+          ${reportedData.user?.email ?? "email no disponible"} (id: ${reportedId})</p>
+        <p><strong>Animal:</strong> ${conversation.animals?.name ?? "—"}</p>
+        <p><a href="${link}">Ver conversación</a></p>
+      `,
+    });
+  } catch (err) {
+    console.error("reportConversation failed:", err);
+    return { error: "No se pudo enviar el reporte. Inténtalo de nuevo.", success: false };
+  }
+
+  return { error: null, success: true };
+}
+
 async function notifyNewMessage(conversationId: string, senderId: string) {
   try {
     const supabase = await createClient();

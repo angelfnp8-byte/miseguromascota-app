@@ -8,7 +8,9 @@ import {
   animalTypeLabels,
   formatAge,
   formatBreed,
+  formatTimeAgo,
   genderLabels,
+  hoursSince,
   vaccinatedLabels,
 } from "@/lib/animal-labels";
 import { ContactSection } from "@/components/adopcion/ContactSection";
@@ -44,6 +46,12 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   } = await supabase.auth.getUser();
   const isOwner = user?.id === animal.owner_user_id;
 
+  // Un anuncio adoptado deja de ser accesible públicamente pasadas 48h desde
+  // que se marcó — el dueño lo sigue viendo siempre en "Mis publicaciones".
+  if (animal.status === "adopted" && animal.adopted_at && !isOwner) {
+    if (hoursSince(animal.adopted_at) > 48) notFound();
+  }
+
   const photos = [...animal.animal_photos].sort((a, b) => a.position - b.position);
 
   return (
@@ -63,6 +71,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       )}
 
       <h1>{animal.name}</h1>
+      <p className="mb-4 text-[0.85rem] text-(--color-text-light)">{formatTimeAgo(animal.created_at)}</p>
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.4fr_1fr]">
         <div>

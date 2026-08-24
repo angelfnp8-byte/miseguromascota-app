@@ -1,7 +1,14 @@
 import Link from "next/link";
 import type { AnimalWithPhotos } from "@/lib/supabase/types";
 import { animalPhotoUrl } from "@/lib/animals";
-import { animalTypeIcons, animalTypeLabels, formatAge, formatBreed, vaccinatedLabels } from "@/lib/animal-labels";
+import {
+  animalTypeIcons,
+  animalTypeLabels,
+  formatAge,
+  formatBreed,
+  formatTimeAgo,
+  vaccinatedLabels,
+} from "@/lib/animal-labels";
 
 export function AnimalCard({ animal }: { animal: AnimalWithPhotos }) {
   const photo = [...animal.animal_photos].sort((a, b) => a.position - b.position)[0];
@@ -36,6 +43,7 @@ export function AnimalCard({ animal }: { animal: AnimalWithPhotos }) {
             {vaccinatedLabels[animal.vaccinated]}
           </span>
         </div>
+        <p className="mb-3 text-[0.75rem] text-(--color-text-light)">{formatTimeAgo(animal.created_at)}</p>
         <Link
           href={`/adopcion/${animal.id}`}
           className="block rounded-full bg-(--color-primary) px-4 py-2 text-center text-[0.92rem] font-bold text-white hover:bg-(--color-primary-dark)"

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { requireUser } from "@/lib/require-user";
 import { getConversationsForUser } from "@/lib/chat";
 import { animalTypeIcons } from "@/lib/animal-labels";
+import { deleteConversation } from "@/app/mensajes/actions";
 
 export const metadata: Metadata = {
   title: "Mensajes",
@@ -29,23 +30,33 @@ export default async function Page() {
             const otherName =
               (isOwner ? c.interested?.display_name : c.owner?.display_name) || "Usuario";
             return (
-              <Link
+              <div
                 key={c.id}
-                href={`/mensajes/${c.id}`}
                 className="flex items-center gap-4 rounded-2xl border border-(--color-border) bg-(--color-surface) p-4 hover:bg-(--color-secondary-light)"
               >
-                <span className="text-2xl" aria-hidden>
-                  {c.animals ? animalTypeIcons[c.animals.type as keyof typeof animalTypeIcons] : "🐾"}
-                </span>
-                <div className="flex-1">
-                  <p className="mb-0.5 font-bold">
-                    {c.animals?.name ?? "Animal"} · {otherName}
-                  </p>
-                  <p className="mb-0 text-[0.85rem] text-(--color-text-light)">
-                    {isOwner ? "Interesado en adoptar" : "Anuncio del propietario"}
-                  </p>
-                </div>
-              </Link>
+                <Link href={`/mensajes/${c.id}`} className="flex flex-1 items-center gap-4">
+                  <span className="text-2xl" aria-hidden>
+                    {c.animals ? animalTypeIcons[c.animals.type as keyof typeof animalTypeIcons] : "🐾"}
+                  </span>
+                  <div className="flex-1">
+                    <p className="mb-0.5 font-bold">
+                      {c.animals?.name ?? "Animal"} · {otherName}
+                    </p>
+                    <p className="mb-0 text-[0.85rem] text-(--color-text-light)">
+                      {isOwner ? "Interesado en adoptar" : "Anuncio del propietario"}
+                    </p>
+                  </div>
+                </Link>
+                <form action={deleteConversation.bind(null, c.id)}>
+                  <button
+                    type="submit"
+                    aria-label="Eliminar conversación"
+                    className="rounded-full border border-(--color-border) px-3 py-1.5 text-[0.8rem] font-semibold text-red-600 hover:bg-red-50"
+                  >
+                    Eliminar
+                  </button>
+                </form>
+              </div>
             );
           })}
         </div>

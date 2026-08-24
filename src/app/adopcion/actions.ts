@@ -200,7 +200,7 @@ export async function markAsAdopted(animalId: string) {
 
   await supabase
     .from("animals")
-    .update({ status: "adopted" })
+    .update({ status: "adopted", adopted_at: new Date().toISOString() })
     .eq("id", animalId)
     .eq("owner_user_id", user.id);
 
@@ -215,7 +215,7 @@ export async function markAsAvailable(animalId: string) {
 
   await supabase
     .from("animals")
-    .update({ status: "available" })
+    .update({ status: "available", adopted_at: null })
     .eq("id", animalId)
     .eq("owner_user_id", user.id);
 

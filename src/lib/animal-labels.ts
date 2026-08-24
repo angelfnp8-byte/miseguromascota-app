@@ -68,6 +68,26 @@ export function matchesAgeBracket(value: number, unit: AgeUnit, bracket: AgeBrac
   return months >= min && months <= max;
 }
 
+export function formatTimeAgo(dateIso: string): string {
+  const diffMs = Date.now() - new Date(dateIso).getTime();
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (days <= 0) return "Publicado hoy";
+  if (days === 1) return "Publicado hace 1 día";
+  if (days < 30) return `Publicado hace ${days} días`;
+
+  const months = Math.floor(days / 30);
+  if (months === 1) return "Publicado hace 1 mes";
+  if (months < 12) return `Publicado hace ${months} meses`;
+
+  const years = Math.floor(months / 12);
+  return years === 1 ? "Publicado hace 1 año" : `Publicado hace ${years} años`;
+}
+
+export function hoursSince(dateIso: string): number {
+  return (Date.now() - new Date(dateIso).getTime()) / (1000 * 60 * 60);
+}
+
 export function formatBreed(animal: {
   breed_type: string;
   breed: string | null;

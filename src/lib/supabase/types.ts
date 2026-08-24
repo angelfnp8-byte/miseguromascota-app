@@ -60,6 +60,7 @@ export type Animal = {
   contact_email: string;
   status: AnimalStatus;
   temperament: string[];
+  adopted_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -120,9 +121,13 @@ export type Database = {
       };
       animals: {
         Row: Animal;
-        Insert: Omit<Animal, "id" | "created_at" | "updated_at" | "status" | "temperament"> & {
+        Insert: Omit<
+          Animal,
+          "id" | "created_at" | "updated_at" | "status" | "temperament" | "adopted_at"
+        > & {
           status?: AnimalStatus;
           temperament?: string[];
+          adopted_at?: string | null;
         };
         Update: Partial<Omit<Animal, "id" | "owner_user_id" | "created_at" | "updated_at">>;
         Relationships: [];

@@ -6,6 +6,7 @@ import { animalPhotoUrl } from "@/lib/animals";
 import { animalTypeIcons, animalTypeLabels, formatAge } from "@/lib/animal-labels";
 import { deleteAnimal, markAsAdopted, markAsAvailable } from "@/app/adopcion/actions";
 import { EmptyStateIllustration } from "@/components/illustrations/EmptyStateIllustration";
+import type { AnimalWithPhotos } from "@/lib/supabase/types";
 
 export const metadata: Metadata = {
   title: "Mis publicaciones de adopción",
@@ -34,8 +35,23 @@ export default async function Page() {
           Todavía no has publicado ningún animal.
         </div>
       ) : (
-        <div className="flex flex-col gap-4">
-          {animals.map((animal) => {
+        <>
+          <AnimalGroup title="Activos" animals={animals.filter((a) => a.status === "available")} />
+          <AnimalGroup title="Adoptados" animals={animals.filter((a) => a.status === "adopted")} />
+        </>
+      )}
+    </div>
+  );
+}
+
+function AnimalGroup({ title, animals }: { title: string; animals: AnimalWithPhotos[] }) {
+  if (animals.length === 0) return null;
+
+  return (
+    <div className="mb-8">
+      <h2 className="mb-3 text-[1.1rem]">{title}</h2>
+      <div className="flex flex-col gap-4">
+        {animals.map((animal) => {
             const photo = [...animal.animal_photos].sort((a, b) => a.position - b.position)[0];
             return (
               <div
@@ -115,9 +131,8 @@ export default async function Page() {
                 </div>
               </div>
             );
-          })}
-        </div>
-      )}
+        })}
+      </div>
     </div>
   );
 }
