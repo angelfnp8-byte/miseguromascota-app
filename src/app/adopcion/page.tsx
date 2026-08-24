@@ -7,8 +7,10 @@ import type { AnimalType, Gender, VaccinationStatus } from "@/lib/supabase/types
 import { EmptyStateIllustration } from "@/components/illustrations/EmptyStateIllustration";
 import { FILTERABLE_TEMPERAMENT_TAGS, temperamentLabels } from "@/lib/temperament";
 import { dogBreeds, catBreeds, rabbitBreeds } from "@/lib/breeds";
+import { spanishCities, spanishProvinces } from "@/lib/locations";
 
 const allBreeds = [...dogBreeds, ...catBreeds, ...rabbitBreeds];
+const allLocations = [...new Set([...spanishCities, ...spanishProvinces])];
 
 const adoptionGuides = [
   { label: "Cómo funciona la adopción", href: "/adopcion/como-funciona" },
@@ -163,10 +165,16 @@ export default async function AdopcionPage({
           <input
             type="text"
             name="location"
+            list="location-search-options"
             defaultValue={filters.location ?? ""}
             placeholder="Ciudad o provincia"
             className="rounded-lg border border-(--color-border) bg-(--color-bg) px-2 py-2"
           />
+          <datalist id="location-search-options">
+            {allLocations.map((place) => (
+              <option key={place} value={place} />
+            ))}
+          </datalist>
         </label>
         </div>
 

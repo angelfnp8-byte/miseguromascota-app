@@ -5,6 +5,7 @@ import type { AnimalFormState } from "@/app/adopcion/actions";
 import { animalTypeLabels, genderLabels, vaccinatedLabels } from "@/lib/animal-labels";
 import { temperamentGroups, temperamentLabels } from "@/lib/temperament";
 import { breedsForType } from "@/lib/breeds";
+import { spanishCities, spanishProvinces } from "@/lib/locations";
 import type { Animal, AnimalType } from "@/lib/supabase/types";
 
 const initialState: AnimalFormState = { error: null };
@@ -118,6 +119,16 @@ export function AnimalForm({
             <option key={breed} value={breed} />
           ))}
         </datalist>
+        <datalist id="city-options">
+          {spanishCities.map((city) => (
+            <option key={city} value={city} />
+          ))}
+        </datalist>
+        <datalist id="province-options">
+          {spanishProvinces.map((province) => (
+            <option key={province} value={province} />
+          ))}
+        </datalist>
 
         <Field label="Vacunación">
           <select
@@ -140,6 +151,7 @@ export function AnimalForm({
         <Field label="Ciudad">
           <input
             name="locationCity"
+            list="city-options"
             required
             defaultValue={defaultValues?.location_city}
             className={inputClass}
@@ -149,6 +161,7 @@ export function AnimalForm({
         <Field label="Provincia / región">
           <input
             name="locationRegion"
+            list="province-options"
             required
             defaultValue={defaultValues?.location_region}
             className={inputClass}
