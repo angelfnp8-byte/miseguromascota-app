@@ -41,6 +41,17 @@ export async function getConversation(id: string): Promise<ConversationListItem 
   return data as unknown as ConversationListItem | null;
 }
 
+/** Marks every message in this conversation not sent by `userId` as read. */
+export async function markConversationRead(conversationId: string, userId: string): Promise<void> {
+  const supabase = await createClient();
+  await supabase
+    .from("messages")
+    .update({ read_at: new Date().toISOString() })
+    .eq("conversation_id", conversationId)
+    .is("read_at", null)
+    .neq("sender_id", userId);
+}
+
 export async function getMessages(conversationId: string): Promise<Message[]> {
   const supabase = await createClient();
   const { data, error } = await supabase

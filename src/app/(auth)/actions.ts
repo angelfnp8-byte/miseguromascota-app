@@ -1,18 +1,10 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { headers } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
+import { siteUrl } from "@/lib/site-url";
 
 export type ActionState = { error: string | null };
-
-async function siteUrl() {
-  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
-  if (explicit) return explicit;
-  const headerList = await headers();
-  const host = headerList.get("host") ?? undefined;
-  return host ? `https://${host}` : "http://localhost:3000";
-}
 
 export async function signIn(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const email = String(formData.get("email") ?? "");

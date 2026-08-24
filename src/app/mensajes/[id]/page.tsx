@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/require-user";
-import { getConversation, getMessages } from "@/lib/chat";
+import { getConversation, getMessages, markConversationRead } from "@/lib/chat";
 import { ChatThread } from "@/components/mensajes/ChatThread";
 
 export const metadata: Metadata = {
@@ -21,6 +21,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   if (!isParticipant) notFound();
 
   const messages = await getMessages(id);
+  await markConversationRead(id, user.id);
   const isOwner = conversation.owner_user_id === user.id;
   const otherName =
     (isOwner ? conversation.interested?.display_name : conversation.owner?.display_name) ||
