@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { mainNav } from "@/lib/site-nav";
 
 const adoptionLinks = mainNav.filter((item) => item.group === "adopcion");
@@ -9,6 +10,15 @@ const insuranceLinks = mainNav.filter((item) => item.group === "seguros");
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Cierra el menú móvil al navegar a cualquier página — incluye enlaces
+  // fuera de este componente (p. ej. "Iniciar sesión" en AuthStatus), que
+  // visualmente aparece justo debajo del menú desplegado en móvil pero no
+  // comparte este estado.
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <>
