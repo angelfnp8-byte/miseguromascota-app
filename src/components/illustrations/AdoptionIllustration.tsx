@@ -33,7 +33,7 @@ export function AdoptionIllustration({ className }: { className?: string }) {
       <path d="M90 168 L210 78 L330 168 L330 268 C330 274 325 279 319 279 L101 279 C95 279 90 274 90 268 Z" fill="url(#adoptHouse)" />
       <path d="M70 178 L210 68 L350 178 L332 200 L210 106 L88 200 Z" fill="url(#adoptRoof)" />
       <rect x="182" y="196" width="56" height="83" rx="6" fill="#fff4ec" />
-      <path d="M210 196 v-2 a10 10 0 0 1 10 10 v4 h-20 v-4 a10 10 0 0 1 10 -8 Z" fill="#e35f2c" />
+      <circle cx="226" cy="238" r="3.5" fill="#e35f2c" />
 
       {/* Heart above the door */}
       <path
