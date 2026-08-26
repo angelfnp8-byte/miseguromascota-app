@@ -8,7 +8,7 @@ import Image from "next/image";
 export function HeroPetsIllustration({ className }: { className?: string }) {
   return (
     <Image
-      src="/images/hero-pets-v2.png"
+      src="/images/hero-pets-v3.png"
       alt="Ilustración de un perro y un gato con placas de identificación en forma de escudo"
       width={481}
       height={385}
