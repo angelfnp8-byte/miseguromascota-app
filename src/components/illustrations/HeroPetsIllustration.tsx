@@ -1,8 +1,7 @@
 /**
- * Homepage hero artwork — a house with a dog and a cat peeking out of its
- * windows. Pure hand-drawn SVG (same flat-shape/gradient system as
- * AdoptionIllustration and EmptyStateIllustration) — no raster image file,
- * so there's no compression/format pipeline that can degrade it.
+ * Homepage hero artwork — a dog and a cat sitting together with matching
+ * collars, under a heart. Flat-shape/gradient SVG (no outlines, no house) —
+ * distinct composition from AdoptionIllustration's house-and-windows scene.
  */
 export function HeroPetsIllustration({ className }: { className?: string }) {
   return (
@@ -10,17 +9,13 @@ export function HeroPetsIllustration({ className }: { className?: string }) {
       viewBox="0 0 420 340"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
-      aria-label="Ilustración de una casa con un perro y un gato asomados a las ventanas"
+      aria-label="Ilustración de un perro y un gato sentados juntos, con collar a juego"
       className={className}
     >
       <defs>
-        <linearGradient id="heroHouse" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#ff9a68" />
+        <linearGradient id="heroDog" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#ffb37a" />
           <stop offset="100%" stopColor="#ff7a45" />
-        </linearGradient>
-        <linearGradient id="heroRoof" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#2bb3a3" />
-          <stop offset="100%" stopColor="#146c5b" />
         </linearGradient>
         <linearGradient id="heroCat" x1="0%" y1="0%" x2="0%" y2="100%">
           <stop offset="0%" stopColor="#4fcfbe" />
@@ -28,50 +23,56 @@ export function HeroPetsIllustration({ className }: { className?: string }) {
         </linearGradient>
       </defs>
 
-      {/* House */}
-      <path d="M90 168 L210 78 L330 168 L330 268 C330 274 325 279 319 279 L101 279 C95 279 90 274 90 268 Z" fill="url(#heroHouse)" />
-      <path d="M70 178 L210 68 L350 178 L332 200 L210 106 L88 200 Z" fill="url(#heroRoof)" />
-      <rect x="182" y="196" width="56" height="83" rx="6" fill="#fff4ec" />
-      <circle cx="226" cy="238" r="3.5" fill="#e35f2c" />
+      <circle cx="210" cy="175" r="150" fill="#ffffff" opacity="0.06" />
 
-      {/* Heart above the door */}
+      {/* Heart + sparkles */}
       <path
-        d="M210 150 c-7 -12 -26 -9 -26 6 c0 12 15 20 26 30 c11 -10 26 -18 26 -30 c0 -15 -19 -18 -26 -6 Z"
+        d="M210 68 c-8 -13 -29 -10 -29 7 c0 13 17 22 29 33 c12 -11 29 -20 29 -33 c0 -17 -21 -20 -29 -7 Z"
         fill="#ffffff"
       />
-
-      {/* Dog peeking from the left window */}
-      <g transform="translate(96,196)">
-        <circle cx="34" cy="34" r="34" fill="#fff9f4" />
-        <ellipse cx="10" cy="14" rx="12" ry="16" transform="rotate(-20 10 14)" fill="#e35f2c" />
-        <ellipse cx="58" cy="14" rx="12" ry="16" transform="rotate(20 58 14)" fill="#e35f2c" />
-        <g fill="#5c2c14">
-          <ellipse cx="24" cy="34" rx="4.5" ry="5.5" />
-          <ellipse cx="44" cy="34" rx="4.5" ry="5.5" />
-          <ellipse cx="34" cy="46" rx="6" ry="4.5" />
-        </g>
+      <g fill="#ffffff" opacity="0.7">
+        <rect x="146" y="54" width="5" height="16" rx="2.5" transform="rotate(-18 148.5 62)" />
+        <rect x="269" y="54" width="5" height="16" rx="2.5" transform="rotate(18 271.5 62)" />
       </g>
 
-      {/* Cat peeking from the right window */}
-      <g transform="translate(258,192)">
-        <circle cx="34" cy="36" r="34" fill="#fff9f4" />
-        <path d="M14 10 L26 30 L4 30 Z" fill="url(#heroCat)" />
-        <path d="M54 10 L66 30 L42 30 Z" fill="url(#heroCat)" />
-        <g fill="#0e2e27">
-          <ellipse cx="22" cy="38" rx="4" ry="5" />
-          <ellipse cx="46" cy="38" rx="4" ry="5" />
-          <path d="M28 48 q6 6 12 0 q-6 8 -12 0 Z" />
-        </g>
+      {/* Dog */}
+      <ellipse cx="128" cy="248" rx="60" ry="64" fill="url(#heroDog)" />
+      <ellipse cx="83" cy="145" rx="14" ry="38" transform="rotate(-22 83 145)" fill="url(#heroDog)" />
+      <ellipse cx="177" cy="145" rx="14" ry="38" transform="rotate(22 177 145)" fill="url(#heroDog)" />
+      <circle cx="130" cy="146" r="44" fill="url(#heroDog)" />
+      <ellipse cx="130" cy="163" rx="23" ry="17" fill="#fff9f4" />
+      <g fill="#5c2c14">
+        <ellipse cx="111" cy="136" rx="6.5" ry="8" />
+        <ellipse cx="149" cy="136" rx="6.5" ry="8" />
+        <ellipse cx="130" cy="155" rx="8" ry="5.5" />
       </g>
+      <path d="M74 190 Q130 212 186 190 L186 202 Q130 224 74 202 Z" fill="#146c5b" />
+      <path d="M130 195 L142 201 L142 215 Q130 227 118 215 L118 201 Z" fill="#4fcfbe" />
+      <circle cx="130" cy="210" r="4.5" fill="#ffffff" />
+
+      {/* Cat */}
+      <ellipse cx="292" cy="251" rx="58" ry="62" fill="url(#heroCat)" />
+      <path d="M256 118 L245 82 L280 112 Z" fill="url(#heroCat)" />
+      <path d="M328 118 L339 82 L304 112 Z" fill="url(#heroCat)" />
+      <circle cx="292" cy="150" r="42" fill="url(#heroCat)" />
+      <ellipse cx="292" cy="166" rx="21" ry="15" fill="#fff9f4" />
+      <g fill="#0e2e27">
+        <ellipse cx="274" cy="141" rx="5.5" ry="7" />
+        <ellipse cx="310" cy="141" rx="5.5" ry="7" />
+        <path d="M282 158 q10 8 20 0 q-10 11 -20 0 Z" />
+      </g>
+      <path d="M238 192 Q292 214 346 192 L346 204 Q292 226 238 204 Z" fill="#146c5b" />
+      <path d="M292 197 L304 203 L304 217 Q292 229 280 217 L280 203 Z" fill="#ff7a45" />
+      <circle cx="292" cy="212" r="4.5" fill="#ffffff" />
 
       {/* Paw print trail */}
       <g fill="#ffffff" opacity="0.18">
-        <ellipse cx="356" cy="86" rx="7" ry="9" />
-        <ellipse cx="374" cy="74" rx="5" ry="6.5" />
-        <ellipse cx="340" cy="74" rx="5" ry="6.5" />
-        <ellipse cx="46" cy="100" rx="7" ry="9" />
-        <ellipse cx="64" cy="88" rx="5" ry="6.5" />
-        <ellipse cx="30" cy="88" rx="5" ry="6.5" />
+        <ellipse cx="35" cy="280" rx="7" ry="9" />
+        <ellipse cx="53" cy="268" rx="5" ry="6.5" />
+        <ellipse cx="19" cy="268" rx="5" ry="6.5" />
+        <ellipse cx="387" cy="280" rx="7" ry="9" />
+        <ellipse cx="405" cy="268" rx="5" ry="6.5" />
+        <ellipse cx="369" cy="268" rx="5" ry="6.5" />
       </g>
     </svg>
   );
