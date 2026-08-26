@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://miseguromascota.com/sitemap.xml",
+    sitemap: "https://miseguromascota-app.vercel.app/sitemap.xml",
   };
 }

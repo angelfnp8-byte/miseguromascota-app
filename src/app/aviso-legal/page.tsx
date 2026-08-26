@@ -21,7 +21,7 @@ export default function Page() {
       <p>
         En cumplimiento de la Ley 34/2002, de Servicios de la Sociedad de la
         Información y de Comercio Electrónico (LSSI-CE), se informa de que este
-        sitio web, <a href="https://miseguromascota.com/">miseguromascota.com</a>,
+        sitio web, <a href="https://miseguromascota-app.vercel.app/">miseguromascota-app.vercel.app</a>,
         es titularidad de:
       </p>
       <ul>

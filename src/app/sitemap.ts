@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const baseUrl = "https://miseguromascota.com";
+const baseUrl = "https://miseguromascota-app.vercel.app";
 
 const publicPaths = [
   "",

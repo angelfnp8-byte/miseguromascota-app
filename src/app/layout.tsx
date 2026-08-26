@@ -20,7 +20,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://miseguromascota.com"),
+  metadataBase: new URL("https://miseguromascota-app.vercel.app"),
   title: {
     default: "Mi Seguro Mascota",
     template: "%s | Mi Seguro Mascota",
