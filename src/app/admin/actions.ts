@@ -8,8 +8,11 @@ import { requireAdmin } from "@/lib/require-admin";
 export type AdminFormState = { error: string | null };
 
 function parseEuros(value: FormDataEntryValue | null): number | null {
-  const str = String(value ?? "").trim().replace(",", ".");
+  let str = String(value ?? "").trim();
   if (!str) return null;
+  // Spanish format uses "." as the thousands separator and "," as the decimal
+  // mark — strip dots before swapping the comma so "1.234,56" parses right.
+  if (str.includes(",")) str = str.replace(/\./g, "").replace(",", ".");
   const n = Number(str);
   if (!Number.isFinite(n) || n < 0) return null;
   return Math.round(n * 100);
@@ -58,7 +61,16 @@ export async function deleteAnimalAdmin(animalId: string) {
   await requireAdmin("/admin/adopcion");
   const supabase = await createClient();
 
+  const { data: photos } = await supabase
+    .from("animal_photos")
+    .select("storage_path")
+    .eq("animal_id", animalId);
+
   await supabase.from("animals").delete().eq("id", animalId);
+
+  if (photos && photos.length > 0) {
+    await supabase.storage.from("animal-photos").remove(photos.map((p) => p.storage_path));
+  }
 
   revalidatePath("/admin/adopcion");
   revalidatePath("/adopcion");

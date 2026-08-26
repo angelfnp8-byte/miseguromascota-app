@@ -5,7 +5,6 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/aviso-legal", "/politica-privacidad", "/politica-cookies"],
     },
     sitemap: "https://miseguromascota.com/sitemap.xml",
   };

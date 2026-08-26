@@ -99,7 +99,14 @@ async function uploadPhotos(
 ) {
   const files = formData.getAll("photos").filter((f): f is File => f instanceof File && f.size > 0);
 
-  for (const file of files.slice(0, MAX_PHOTOS)) {
+  const { count: existingCount } = await supabase
+    .from("animal_photos")
+    .select("id", { count: "exact", head: true })
+    .eq("animal_id", animalId);
+
+  const remaining = Math.max(0, MAX_PHOTOS - (existingCount ?? 0));
+
+  for (const file of files.slice(0, remaining)) {
     if (!ALLOWED_PHOTO_TYPES.has(file.type)) continue;
     if (file.size > MAX_PHOTO_BYTES) continue;
 
@@ -170,16 +177,28 @@ export async function deleteAnimalPhoto(animalId: string, photoId: string, stora
   const user = await requireUser(`/adopcion/${animalId}/editar`);
   const supabase = await createClient();
 
+  const { data: animal } = await supabase
+    .from("animals")
+    .select("id")
+    .eq("id", animalId)
+    .eq("owner_user_id", user.id)
+    .maybeSingle();
+  if (!animal) return;
+
   await supabase.storage.from("animal-photos").remove([storagePath]);
-  await supabase.from("animal_photos").delete().eq("id", photoId);
+  await supabase.from("animal_photos").delete().eq("id", photoId).eq("animal_id", animalId);
 
   revalidatePath(`/adopcion/${animalId}/editar`);
-  void user;
 }
 
 export async function deleteAnimal(animalId: string) {
   const user = await requireUser("/adopcion/mis-publicaciones");
   const supabase = await createClient();
+
+  const { data: photos } = await supabase
+    .from("animal_photos")
+    .select("storage_path")
+    .eq("animal_id", animalId);
 
   const { error } = await supabase
     .from("animals")
@@ -188,6 +207,9 @@ export async function deleteAnimal(animalId: string) {
     .eq("owner_user_id", user.id);
 
   if (!error) {
+    if (photos && photos.length > 0) {
+      await supabase.storage.from("animal-photos").remove(photos.map((p) => p.storage_path));
+    }
     revalidatePath("/adopcion");
     revalidatePath("/adopcion/mis-publicaciones");
   }

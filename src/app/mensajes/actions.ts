@@ -11,6 +11,15 @@ import type { Conversation } from "@/lib/supabase/types";
 
 export type MessageFormState = { error: string | null };
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 /**
  * Called from an animal's page when an authenticated user wants to contact
  * the owner. Reuses the existing thread for that animal+user pair if one
@@ -77,6 +86,19 @@ export async function sendMessage(
   if (content.length > 2000) return { error: "El mensaje es demasiado largo." };
 
   const supabase = await createClient();
+
+  const { data: conversation } = await supabase
+    .from("conversations")
+    .select("owner_user_id, interested_user_id")
+    .eq("id", conversationId)
+    .maybeSingle();
+
+  if (
+    !conversation ||
+    (conversation.owner_user_id !== user.id && conversation.interested_user_id !== user.id)
+  ) {
+    return { error: "No se pudo enviar el mensaje." };
+  }
 
   // Si el destinatario ya tenía un mensaje mío sin leer en esta conversación,
   // ya se le avisó por email — no reenviamos otro correo por cada mensaje
@@ -168,12 +190,12 @@ export async function reportConversation(
       to: REPORT_RECIPIENT,
       subject: `Reporte de conversación: ${conversation.animals?.name ?? "animal"}`,
       html: `
-        <p><strong>Motivo:</strong> ${reason}</p>
-        <p><strong>Detalles:</strong> ${details || "(sin detalles)"}</p>
-        <p><strong>Reportado por:</strong> ${user.email} (id: ${user.id})</p>
-        <p><strong>Cuenta reportada:</strong> ${reportedProfile?.display_name ?? "Usuario"} —
-          ${reportedData.user?.email ?? "email no disponible"} (id: ${reportedId})</p>
-        <p><strong>Animal:</strong> ${conversation.animals?.name ?? "—"}</p>
+        <p><strong>Motivo:</strong> ${escapeHtml(reason)}</p>
+        <p><strong>Detalles:</strong> ${details ? escapeHtml(details) : "(sin detalles)"}</p>
+        <p><strong>Reportado por:</strong> ${escapeHtml(user.email ?? "")} (id: ${user.id})</p>
+        <p><strong>Cuenta reportada:</strong> ${escapeHtml(reportedProfile?.display_name ?? "Usuario")} —
+          ${escapeHtml(reportedData.user?.email ?? "email no disponible")} (id: ${reportedId})</p>
+        <p><strong>Animal:</strong> ${escapeHtml(conversation.animals?.name ?? "—")}</p>
         <p><a href="${link}">Ver conversación</a></p>
       `,
     });
@@ -216,7 +238,7 @@ async function notifyNewMessage(conversationId: string, senderId: string) {
       to: recipientEmail,
       subject: "Tienes un nuevo mensaje en Mi Seguro Mascota",
       html: `
-        <p>Tienes un nuevo mensaje sobre <strong>${animalName}</strong> en Mi Seguro Mascota.</p>
+        <p>Tienes un nuevo mensaje sobre <strong>${escapeHtml(animalName)}</strong> en Mi Seguro Mascota.</p>
         <p><a href="${link}">Responder en la conversación</a></p>
       `,
     });

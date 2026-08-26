@@ -13,6 +13,13 @@ export type AnimalFilters = {
   temperament?: string[];
 };
 
+// `.or()` takes a raw PostgREST filter string, so a `,` or `(`/`)` in user
+// input would let it break out of the intended clause and inject extra
+// filter terms — strip the characters that carry syntactic meaning there.
+function sanitizeOrFilterValue(value: string): string {
+  return value.replace(/[,()]/g, "");
+}
+
 export async function getAnimals(filters: AnimalFilters = {}): Promise<AnimalWithPhotos[]> {
   const supabase = await createClient();
   let query = supabase
@@ -26,12 +33,12 @@ export async function getAnimals(filters: AnimalFilters = {}): Promise<AnimalWit
   if (filters.breedType) query = query.eq("breed_type", filters.breedType);
   if (filters.vaccinated) query = query.eq("vaccinated", filters.vaccinated);
   if (filters.location) {
-    query = query.or(
-      `location_city.ilike.%${filters.location}%,location_region.ilike.%${filters.location}%`,
-    );
+    const location = sanitizeOrFilterValue(filters.location);
+    query = query.or(`location_city.ilike.%${location}%,location_region.ilike.%${location}%`);
   }
   if (filters.breed) {
-    query = query.or(`breed.ilike.%${filters.breed}%,mixed_breeds.ilike.%${filters.breed}%`);
+    const breed = sanitizeOrFilterValue(filters.breed);
+    query = query.or(`breed.ilike.%${breed}%,mixed_breeds.ilike.%${breed}%`);
   }
   if (filters.temperament && filters.temperament.length > 0) {
     query = query.contains("temperament", filters.temperament);

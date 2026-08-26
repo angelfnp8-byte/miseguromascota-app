@@ -34,6 +34,9 @@ export function CookieBanner() {
 
     if (stored === "granted") updateConsent(true);
     else if (stored === "denied") updateConsent(false);
+    // Deferred on purpose: localStorage is unavailable during SSR, and defaulting
+    // to hidden here (vs. computing this during render) avoids a hydration mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     else setVisible(true);
   }, []);
 

@@ -17,6 +17,7 @@ export function MobileNav() {
   // visualmente aparece justo debajo del menú desplegado en móvil pero no
   // comparte este estado.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
   }, [pathname]);
 

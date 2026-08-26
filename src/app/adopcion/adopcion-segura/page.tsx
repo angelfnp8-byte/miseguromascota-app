@@ -58,7 +58,7 @@ export default function Page() {
       <ul>
         <li>Peticiones de pago por adelantado antes de ver al animal en persona.</li>
         <li>
-          Propuestas de "envío" del animal por transporte o mensajería a cambio de un
+          Propuestas de &quot;envío&quot; del animal por transporte o mensajería a cambio de un
           pago previo.
         </li>
         <li>Cantidades elevadas o poco justificadas.</li>

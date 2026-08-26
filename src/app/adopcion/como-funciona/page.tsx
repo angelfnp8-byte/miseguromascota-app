@@ -51,7 +51,7 @@ export default function Page() {
         acompañado, y seguir nuestros{" "}
         <Link href="/adopcion/adopcion-segura">consejos de adopción segura</Link>. Si
         decidís seguir adelante, quien publicó el anuncio puede marcarlo como
-        "adoptado" desde{" "}
+        &quot;adoptado&quot; desde{" "}
         <Link href="/adopcion/mis-publicaciones">sus publicaciones</Link>.
       </p>
 
