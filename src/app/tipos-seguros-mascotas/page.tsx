@@ -21,9 +21,12 @@ export default function Page() {
       <h2>1. Seguro de responsabilidad civil</h2>
       <p>
         Cubre los daños que tu mascota pueda causar a terceros: una persona, otro
-        animal o una propiedad. Es el tipo de cobertura obligatoria para razas o
-        ejemplares clasificados como perros potencialmente peligrosos, aunque
-        también puede contratarse de forma voluntaria para cualquier mascota.
+        animal o una propiedad. Es el tipo de cobertura obligatoria para{" "}
+        <Link href="/seguro-perros-raza-peligrosa">
+          razas o ejemplares clasificados como perros potencialmente peligrosos
+        </Link>
+        , aunque también puede contratarse de forma voluntaria para cualquier
+        mascota.
       </p>
 
       <h2>2. Seguro de accidentes</h2>

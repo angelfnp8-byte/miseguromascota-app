@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getAnimals } from "@/lib/animals";
 
 const baseUrl = "https://miseguromascota-app.vercel.app";
 
@@ -28,10 +29,18 @@ const publicPaths = [
   "/contacto",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
-  return publicPaths.map((path) => ({
+  const staticEntries = publicPaths.map((path) => ({
     url: `${baseUrl}${path}`,
     lastModified,
   }));
+
+  const animals = await getAnimals();
+  const animalEntries = animals.map((animal) => ({
+    url: `${baseUrl}/adopcion/${animal.id}`,
+    lastModified: new Date(animal.updated_at),
+  }));
+
+  return [...staticEntries, ...animalEntries];
 }

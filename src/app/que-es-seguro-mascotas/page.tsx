@@ -82,10 +82,13 @@ export default function Page() {
       <h2>¿Es obligatorio tener un seguro para mascotas en España?</h2>
       <p>
         No existe una obligación general de asegurar a perros o gatos como mascota
-        de compañía. La excepción son los llamados <em>perros potencialmente
-        peligrosos</em> (PPP), para los que la normativa autonómica exige un seguro
-        de responsabilidad civil específico, independientemente de si se contrata
-        además una cobertura veterinaria voluntaria.
+        de compañía. La excepción son los llamados{" "}
+        <Link href="/seguro-perros-raza-peligrosa">
+          <em>perros potencialmente peligrosos</em> (PPP)
+        </Link>
+        , para los que la normativa autonómica exige un seguro de responsabilidad
+        civil específico, independientemente de si se contrata además una
+        cobertura veterinaria voluntaria.
       </p>
 
       <p>

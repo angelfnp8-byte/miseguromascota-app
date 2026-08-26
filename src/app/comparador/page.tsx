@@ -8,15 +8,34 @@ import { AD_SLOTS } from "@/lib/adsense";
 export const metadata: Metadata = {
   title: "Comparador de seguros para perros y gatos",
   description:
-    "Compara las coberturas de las principales aseguradoras de mascotas en España -responsabilidad civil, salud básica y salud completa- con enlace directo a la web oficial de cada aseguradora.",
+    "Compara coberturas de las principales aseguradoras de mascotas en España -RC, salud básica y completa- con enlace directo a la web oficial de cada una.",
   alternates: { canonical: "/comparador" },
 };
 
 export default async function ComparadorPage() {
   const insurers = await getInsurers();
 
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: insurers.map((insurer, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Service",
+        name: `Seguro de mascotas — ${insurer.name}`,
+        provider: { "@type": "Organization", name: insurer.name },
+        url: insurer.website_url,
+      },
+    })),
+  };
+
   return (
     <div className="mx-auto max-w-[820px] px-5 pt-10 pb-14">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+      />
       <p className="mb-1.5 text-[0.85rem] text-(--color-text-light)">
         <Link href="/" className="hover:underline">
           Inicio

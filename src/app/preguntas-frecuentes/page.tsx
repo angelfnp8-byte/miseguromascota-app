@@ -57,6 +57,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <h2>Preguntas y respuestas</h2>
       {faqs.map((f) => (
         <div key={f.q} className="faq-item">
           <h3>{f.q}</h3>
@@ -65,7 +66,8 @@ export default function Page() {
       ))}
       <p className="mt-8">
         ¿No encuentras respuesta a tu duda? Visita nuestra página de{" "}
-        <Link href="/contacto">contacto</Link>.
+        <Link href="/contacto">contacto</Link>, o compara pólizas reales en el{" "}
+        <Link href="/comparador">comparador de aseguradoras</Link>.
       </p>
     </ArticleShell>
   );

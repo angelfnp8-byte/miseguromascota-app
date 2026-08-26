@@ -28,10 +28,25 @@ export async function generateMetadata({
   const { id } = await params;
   const animal = await getAnimalById(id);
   if (!animal) return { title: "Animal no encontrado" };
+
+  const title = `${animal.name} — en adopción en ${animal.location_city}`;
+  const description =
+    animal.description.length >= 40
+      ? animal.description.slice(0, 160)
+      : `Conoce a ${animal.name}, en adopción en ${animal.location_city} (${animal.location_region}). Contacta de forma segura a través de Mi Seguro Mascota.`;
+  const firstPhoto = [...animal.animal_photos].sort((a, b) => a.position - b.position)[0];
+
   return {
-    title: `${animal.name} — en adopción en ${animal.location_city}`,
-    description: animal.description.slice(0, 160),
+    title,
+    description,
+    alternates: { canonical: `/adopcion/${id}` },
     robots: { index: animal.status === "available", follow: true },
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      images: firstPhoto ? [{ url: animalPhotoUrl(firstPhoto.storage_path) }] : undefined,
+    },
   };
 }
 
@@ -131,6 +146,20 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
           {animal.status === "available" && (
             <ContactSection animalId={animal.id} isOwner={isOwner} />
+          )}
+
+          {animal.status === "available" && !isOwner && (
+            <p className="text-[0.85rem] text-(--color-text-light)">
+              Antes de contactar, lee nuestros{" "}
+              <Link href="/adopcion/adopcion-segura" className="underline">
+                consejos de adopción segura
+              </Link>{" "}
+              y resuelve dudas comunes en las{" "}
+              <Link href="/adopcion/preguntas-frecuentes" className="underline">
+                preguntas frecuentes
+              </Link>
+              .
+            </p>
           )}
         </aside>
       </div>

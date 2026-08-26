@@ -92,7 +92,9 @@ export default function Page() {
 
       <p>
         Para profundizar en cifras orientativas, visita nuestra guía de{" "}
-        <Link href="/cuanto-cuesta-seguro-mascota">precios de seguros para mascotas</Link>.
+        <Link href="/cuanto-cuesta-seguro-mascota">precios de seguros para mascotas</Link>, o
+        pide cotizaciones reales directamente en el{" "}
+        <Link href="/comparador">comparador de aseguradoras</Link>.
       </p>
     </ArticleShell>
   );

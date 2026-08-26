@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArticleShell } from "@/components/layout/ArticleShell";
 
 export const metadata: Metadata = {
@@ -91,6 +92,13 @@ export default function Page() {
         legal. Mi Seguro Mascota no es una aseguradora ni intermediario y no puede
         gestionar reclamaciones en tu nombre.
       </blockquote>
+
+      <p>
+        Repasa cómo funciona el modelo de{" "}
+        <Link href="/que-es-seguro-mascotas">reembolso frente al pago directo</Link>{" "}
+        o consulta más dudas en nuestras{" "}
+        <Link href="/preguntas-frecuentes">preguntas frecuentes</Link>.
+      </p>
 
       <p className="border-t border-(--color-border) pt-4 text-[0.85rem] text-(--color-text-light)">
         Fuentes:{" "}

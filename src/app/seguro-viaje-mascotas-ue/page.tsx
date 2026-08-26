@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArticleShell } from "@/components/layout/ArticleShell";
 
 export const metadata: Metadata = {
   title: "Seguro de viaje para mascotas: qué cubrir si viajas dentro de la UE",
   description:
-    "Requisitos oficiales para viajar con tu perro o gato por la Unión Europea, el pasaporte europeo para animales de compañía y qué debería cubrir un seguro pensado para viajar.",
+    "Requisitos oficiales para viajar con tu perro o gato por la UE, el pasaporte europeo para animales de compañía y qué debería cubrir un seguro de viaje.",
   alternates: { canonical: "/seguro-viaje-mascotas-ue" },
 };
 
@@ -87,6 +88,13 @@ export default function Page() {
         momento de tu viaje y confirma los requisitos específicos del país de
         destino con la embajada o el organismo veterinario oficial correspondiente.
       </blockquote>
+
+      <p>
+        Repasa los{" "}
+        <Link href="/tipos-seguros-mascotas">tipos de seguro disponibles</Link> y
+        compara opciones en el{" "}
+        <Link href="/comparador">comparador de aseguradoras</Link>.
+      </p>
 
       <p className="border-t border-(--color-border) pt-4 text-[0.85rem] text-(--color-text-light)">
         Fuentes:{" "}

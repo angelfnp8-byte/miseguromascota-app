@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArticleShell } from "@/components/layout/ArticleShell";
 
 export const metadata: Metadata = {
@@ -88,6 +89,13 @@ export default function Page() {
         exacto de cada póliza —no solo el folleto comercial— para saber cómo trata
         específicamente las condiciones hereditarias y preexistentes.
       </blockquote>
+
+      <p>
+        Repasa qué significan exactamente{" "}
+        <Link href="/que-es-seguro-mascotas">carencia y preexistencia</Link> o
+        consulta el resto de términos en nuestro{" "}
+        <Link href="/glosario-seguro-mascotas">glosario del seguro de mascotas</Link>.
+      </p>
 
       <p className="border-t border-(--color-border) pt-4 text-[0.85rem] text-(--color-text-light)">
         Fuentes:{" "}

@@ -99,7 +99,9 @@ export default function Page() {
       <p>
         Si tienes dudas sobre cómo se aplican estos términos en la práctica,
         consulta también nuestra guía{" "}
-        <Link href="/como-elegir-seguro-mascota">cómo elegir el mejor seguro</Link>.
+        <Link href="/como-elegir-seguro-mascota">cómo elegir el mejor seguro</Link>, o
+        compara pólizas reales en el{" "}
+        <Link href="/comparador">comparador de aseguradoras</Link>.
       </p>
     </ArticleShell>
   );

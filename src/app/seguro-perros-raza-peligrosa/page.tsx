@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ArticleShell } from "@/components/layout/ArticleShell";
 
 export const metadata: Metadata = {
   title: "Seguro para perros de raza potencialmente peligrosa: qué exige la ley",
   description:
-    "Qué razas están catalogadas como PPP en España, la cuantía del seguro de responsabilidad civil obligatorio y el estado real de la obligación de seguro para todos los perros.",
+    "Qué razas están catalogadas como PPP en España, la cuantía del seguro de RC obligatorio y el estado real de la obligación de seguro para todos los perros.",
   alternates: { canonical: "/seguro-perros-raza-peligrosa" },
 };
 
@@ -102,6 +103,13 @@ export default function Page() {
         reglamentario en España: antes de dar por hecho una obligación o una fecha
         concreta, contrasta siempre la información con el BOE o con tu ayuntamiento.
       </blockquote>
+
+      <p>
+        Si buscas concretamente esta cobertura, consulta nuestra guía de{" "}
+        <Link href="/tipos-seguros-mascotas">tipos de seguro para mascotas</Link> y
+        compara pólizas de responsabilidad civil en el{" "}
+        <Link href="/comparador">comparador de aseguradoras</Link>.
+      </p>
 
       <p className="border-t border-(--color-border) pt-4 text-[0.85rem] text-(--color-text-light)">
         Fuentes:{" "}

@@ -61,6 +61,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <h2>Preguntas y respuestas</h2>
       {faqs.map((f) => (
         <div key={f.q} className="faq-item">
           <h3>{f.q}</h3>

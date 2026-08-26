@@ -9,12 +9,12 @@ export function ExistingPhotos({ animalId, photos }: { animalId: string; photos:
     <div className="mb-6">
       <p className="mb-2 text-[0.9rem] font-semibold">Fotos actuales</p>
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
-        {photos.map((photo) => (
+        {photos.map((photo, i) => (
           <div key={photo.id} className="relative">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={animalPhotoUrl(photo.storage_path)}
-              alt=""
+              alt={`Foto ${i + 1} del anuncio`}
               className="aspect-square w-full rounded-lg object-cover"
             />
             <form action={deleteAnimalPhoto.bind(null, animalId, photo.id, photo.storage_path)}>

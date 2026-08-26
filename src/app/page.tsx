@@ -9,7 +9,7 @@ import { AdoptionIllustration } from "@/components/illustrations/AdoptionIllustr
 export const metadata: Metadata = {
   title: "Mi Seguro Mascota — Guías y comparativas de seguros para mascotas en España",
   description:
-    "Comparativas independientes, guías y precios orientativos de seguros para perros y gatos en España. Aprende qué cubren, cuánto cuestan y cómo elegir el mejor para tu mascota.",
+    "Comparativas independientes, guías y precios orientativos de seguros para perros y gatos en España. Aprende qué cubren y cómo elegir el mejor.",
   alternates: { canonical: "/" },
 };
 
