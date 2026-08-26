@@ -8,7 +8,7 @@ import Image from "next/image";
 export function HeroPetsIllustration({ className }: { className?: string }) {
   return (
     <Image
-      src="/images/hero-pets.webp"
+      src="/images/hero-pets.png"
       alt="Ilustración de un perro y un gato felices sentados juntos, con collar a juego"
       width={481}
       height={385}
