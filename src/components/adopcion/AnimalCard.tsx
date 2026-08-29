@@ -4,6 +4,7 @@ import { animalPhotoUrl } from "@/lib/animals";
 import {
   animalTypeIcons,
   animalTypeLabels,
+  capitalizeWords,
   formatAge,
   formatBreed,
   formatTimeAgo,
@@ -12,6 +13,7 @@ import {
 
 export function AnimalCard({ animal }: { animal: AnimalWithPhotos }) {
   const photo = [...animal.animal_photos].sort((a, b) => a.position - b.position)[0];
+  const name = capitalizeWords(animal.name);
 
   return (
     <article className="overflow-hidden rounded-2xl border border-(--color-border) bg-(--color-surface) shadow-[var(--shadow-sm)] transition-shadow hover:shadow-[var(--shadow)]">
@@ -20,7 +22,8 @@ export function AnimalCard({ animal }: { animal: AnimalWithPhotos }) {
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={animalPhotoUrl(photo.storage_path)}
-            alt={animal.name}
+            alt={name}
+            loading="lazy"
             className="h-full w-full object-cover"
           />
         ) : (
@@ -30,14 +33,14 @@ export function AnimalCard({ animal }: { animal: AnimalWithPhotos }) {
         )}
       </div>
       <div className="p-4">
-        <h3 className="mb-1 text-[1.05rem]">{animal.name}</h3>
+        <h3 className="mb-1 text-[1.05rem]">{name}</h3>
         <p className="mb-2 text-[0.85rem] text-(--color-text-light)">
           {animalTypeLabels[animal.type]} · {formatAge(animal.age_value, animal.age_unit)} ·{" "}
           {formatBreed(animal)}
         </p>
         <div className="mb-3 flex flex-wrap gap-1.5">
           <span className="rounded-full bg-(--color-secondary-light) px-2.5 py-1 text-[0.72rem] font-bold uppercase tracking-wide text-(--color-secondary)">
-            {animal.location_city}
+            {capitalizeWords(animal.location_city)}
           </span>
           <span className="rounded-full bg-(--color-secondary-light) px-2.5 py-1 text-[0.72rem] font-bold uppercase tracking-wide text-(--color-secondary)">
             {vaccinatedLabels[animal.vaccinated]}

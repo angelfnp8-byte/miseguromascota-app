@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/require-user";
 import { getAnimalById } from "@/lib/animals";
+import { capitalizeWords } from "@/lib/animal-labels";
 import { EditAnimalForm } from "./EditAnimalForm";
 import { ExistingPhotos } from "./ExistingPhotos";
 
@@ -19,7 +20,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
   return (
     <div className="mx-auto max-w-[720px] px-5 py-12">
-      <h1>Editar anuncio de {animal.name}</h1>
+      <h1>Editar anuncio de {capitalizeWords(animal.name)}</h1>
       <ExistingPhotos animalId={animal.id} photos={animal.animal_photos} />
       <EditAnimalForm animal={animal} />
     </div>

@@ -149,9 +149,14 @@ function InsurerCard({ insurer }: { insurer: Insurer }) {
       <div className="mb-3 rounded-xl bg-(--color-secondary-light) p-3">
         <p className="mb-1.5 text-[0.85rem] font-bold text-(--color-secondary)">
           {insurer.rating != null
-            ? `⭐ ${insurer.rating.toFixed(1)} / 5 (${insurer.rating_count ?? "?"} opiniones${
-                insurer.rating_source ? ` · ${insurer.rating_source}` : ""
-              })`
+            ? (() => {
+                const parts = [
+                  insurer.rating_count != null ? `${insurer.rating_count} opiniones` : null,
+                  insurer.rating_source,
+                ].filter(Boolean);
+                const suffix = parts.length > 0 ? ` (${parts.join(" · ")})` : "";
+                return `⭐ ${insurer.rating.toFixed(1)} / 5${suffix}`;
+              })()
             : "No hay suficientes opiniones verificables disponibles."}
         </p>
         {insurer.review_summary_positive && (

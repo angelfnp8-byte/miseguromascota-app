@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import {
   animalTypeIcons,
   animalTypeLabels,
+  capitalizeWords,
   formatAge,
   formatBreed,
   formatTimeAgo,
@@ -29,11 +30,14 @@ export async function generateMetadata({
   const animal = await getAnimalById(id);
   if (!animal) return { title: "Animal no encontrado" };
 
-  const title = `${animal.name} — en adopción en ${animal.location_city}`;
+  const name = capitalizeWords(animal.name);
+  const city = capitalizeWords(animal.location_city);
+  const region = capitalizeWords(animal.location_region);
+  const title = `${name} — en adopción en ${city}`;
   const description =
     animal.description.length >= 40
       ? animal.description.slice(0, 160)
-      : `Conoce a ${animal.name}, en adopción en ${animal.location_city} (${animal.location_region}). Contacta de forma segura a través de Mi Seguro Mascota.`;
+      : `Conoce a ${name}, en adopción en ${city} (${region}). Contacta de forma segura a través de Mi Seguro Mascota.`;
   const firstPhoto = [...animal.animal_photos].sort((a, b) => a.position - b.position)[0];
 
   return {
@@ -68,6 +72,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   }
 
   const photos = [...animal.animal_photos].sort((a, b) => a.position - b.position);
+  const name = capitalizeWords(animal.name);
+  const city = capitalizeWords(animal.location_city);
+  const region = capitalizeWords(animal.location_region);
 
   return (
     <>
@@ -76,7 +83,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         <Link href="/adopcion" className="hover:underline">
           Adopción
         </Link>{" "}
-        / {animal.name}
+        / {name}
       </p>
 
       {animal.status === "adopted" && (
@@ -85,7 +92,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         </p>
       )}
 
-      <h1>{animal.name}</h1>
+      <h1>{name}</h1>
       <p className="mb-4 text-[0.85rem] text-(--color-text-light)">{formatTimeAgo(animal.created_at)}</p>
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.4fr_1fr]">
@@ -97,7 +104,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
                 <img
                   key={photo.id}
                   src={animalPhotoUrl(photo.storage_path)}
-                  alt={`${animal.name} — foto ${i + 1}`}
+                  alt={`${name} — foto ${i + 1}`}
+                  loading={i === 0 ? "eager" : "lazy"}
                   className={`rounded-xl object-cover ${i === 0 ? "col-span-2 aspect-video w-full" : "aspect-square w-full"}`}
                 />
               ))}
@@ -108,7 +116,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             </div>
           )}
 
-          <h2>Sobre {animal.name}</h2>
+          <h2>Sobre {name}</h2>
           <p className="whitespace-pre-line">{animal.description}</p>
 
           {animal.temperament && animal.temperament.length > 0 && (
@@ -136,7 +144,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
               <Dt label="Género" value={genderLabels[animal.gender]} />
               <Dt label="Raza" value={formatBreed(animal)} />
               <Dt label="Vacunación" value={vaccinatedLabels[animal.vaccinated]} />
-              <Dt label="Ubicación" value={`${animal.location_city}, ${animal.location_region}`} />
+              <Dt label="Ubicación" value={`${city}, ${region}`} />
             </dl>
           </div>
 

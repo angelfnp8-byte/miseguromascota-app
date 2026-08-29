@@ -88,6 +88,21 @@ export function hoursSince(dateIso: string): number {
   return (Date.now() - new Date(dateIso).getTime()) / (1000 * 60 * 60);
 }
 
+const LOWERCASE_WORDS = new Set(["de", "del", "la", "las", "el", "los", "y"]);
+
+/** Display-only title case — doesn't touch the stored value, just how it's shown. */
+export function capitalizeWords(text: string): string {
+  return text
+    .trim()
+    .toLowerCase()
+    .split(" ")
+    .map((word, i) => {
+      if (i > 0 && LOWERCASE_WORDS.has(word)) return word;
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+}
+
 export function formatBreed(animal: {
   breed_type: string;
   breed: string | null;

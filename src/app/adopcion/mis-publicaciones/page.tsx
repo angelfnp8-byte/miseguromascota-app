@@ -3,7 +3,7 @@ import Link from "next/link";
 import { requireUser } from "@/lib/require-user";
 import { getMyAnimals } from "@/lib/animals";
 import { animalPhotoUrl } from "@/lib/animals";
-import { animalTypeIcons, animalTypeLabels, formatAge } from "@/lib/animal-labels";
+import { animalTypeIcons, animalTypeLabels, capitalizeWords, formatAge } from "@/lib/animal-labels";
 import { deleteAnimal, markAsAdopted, markAsAvailable } from "@/app/adopcion/actions";
 import { EmptyStateIllustration } from "@/components/illustrations/EmptyStateIllustration";
 import type { AnimalWithPhotos } from "@/lib/supabase/types";
@@ -53,6 +53,7 @@ function AnimalGroup({ title, animals }: { title: string; animals: AnimalWithPho
       <div className="flex flex-col gap-4">
         {animals.map((animal) => {
             const photo = [...animal.animal_photos].sort((a, b) => a.position - b.position)[0];
+            const name = capitalizeWords(animal.name);
             return (
               <div
                 key={animal.id}
@@ -63,7 +64,8 @@ function AnimalGroup({ title, animals }: { title: string; animals: AnimalWithPho
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={animalPhotoUrl(photo.storage_path)}
-                      alt={animal.name}
+                      alt={name}
+                      loading="lazy"
                       className="h-full w-full object-cover"
                     />
                   ) : (
@@ -75,7 +77,7 @@ function AnimalGroup({ title, animals }: { title: string; animals: AnimalWithPho
 
                 <div className="min-w-40 flex-1">
                   <p className="mb-0.5 font-bold">
-                    {animal.name}{" "}
+                    {name}{" "}
                     {animal.status === "adopted" && (
                       <span className="ml-1 rounded-full bg-(--color-secondary-light) px-2.5 py-0.5 text-[0.7rem] font-bold uppercase text-(--color-secondary)">
                         Adoptado
@@ -84,7 +86,7 @@ function AnimalGroup({ title, animals }: { title: string; animals: AnimalWithPho
                   </p>
                   <p className="mb-0 text-[0.85rem] text-(--color-text-light)">
                     {animalTypeLabels[animal.type]} · {formatAge(animal.age_value, animal.age_unit)} ·{" "}
-                    {animal.location_city}
+                    {capitalizeWords(animal.location_city)}
                   </p>
                 </div>
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { requireAdmin } from "@/lib/require-admin";
 import { createClient } from "@/lib/supabase/server";
-import { animalTypeLabels } from "@/lib/animal-labels";
+import { animalTypeLabels, capitalizeWords } from "@/lib/animal-labels";
 import { deleteAnimalAdmin } from "@/app/admin/actions";
 import type { Animal } from "@/lib/supabase/types";
 
@@ -40,13 +40,13 @@ export default async function Page() {
           >
             <div>
               <p className="mb-0.5 font-bold">
-                {animal.name}{" "}
+                {capitalizeWords(animal.name)}{" "}
                 <span className="ml-1 rounded-full bg-(--color-secondary-light) px-2.5 py-0.5 text-[0.7rem] font-bold uppercase text-(--color-secondary)">
                   {animal.status === "available" ? "Disponible" : "Adoptado"}
                 </span>
               </p>
               <p className="mb-0 text-[0.85rem] text-(--color-text-light)">
-                {animalTypeLabels[animal.type]} · {animal.location_city} · publicado por{" "}
+                {animalTypeLabels[animal.type]} · {capitalizeWords(animal.location_city)} · publicado por{" "}
                 {animal.profiles?.display_name ?? "usuario"}
               </p>
             </div>
