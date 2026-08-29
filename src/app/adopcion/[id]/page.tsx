@@ -146,6 +146,12 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
               <Dt label="Vacunación" value={vaccinatedLabels[animal.vaccinated]} />
               <Dt label="Ubicación" value={`${city}, ${region}`} />
             </dl>
+            <Link
+              href={`/perfil/${animal.owner_user_id}`}
+              className="mt-3 inline-block text-[0.85rem] font-semibold text-(--color-secondary) hover:underline"
+            >
+              Ver perfil de quien publica este anuncio →
+            </Link>
           </div>
 
           {animal.status === "available" && !isOwner && (

@@ -42,5 +42,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(animal.updated_at),
   }));
 
-  return [...staticEntries, ...animalEntries];
+  const publisherIds = [...new Set(animals.map((a) => a.owner_user_id))];
+  const profileEntries = publisherIds.map((id) => ({
+    url: `${baseUrl}/perfil/${id}`,
+    lastModified,
+  }));
+
+  return [...staticEntries, ...animalEntries, ...profileEntries];
 }

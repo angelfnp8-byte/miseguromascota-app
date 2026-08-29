@@ -104,6 +104,12 @@ export function AuthStatus() {
         </Link>
       )}
       <Link
+        href={`/perfil/${user.id}`}
+        className="text-[0.9rem] font-semibold text-(--color-text) hover:text-(--color-primary)"
+      >
+        Mi perfil
+      </Link>
+      <Link
         href="/mensajes"
         className="relative text-[0.9rem] font-semibold text-(--color-text) hover:text-(--color-primary)"
       >

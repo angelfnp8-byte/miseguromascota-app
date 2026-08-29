@@ -75,6 +75,22 @@ export async function getAnimalById(id: string): Promise<AnimalWithPhotos | null
   return data as AnimalWithPhotos | null;
 }
 
+export async function getAvailableAnimalsByOwner(ownerId: string): Promise<AnimalWithPhotos[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("animals")
+    .select("*, animal_photos(*)")
+    .eq("owner_user_id", ownerId)
+    .eq("status", "available")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching owner's animals:", error.message);
+    return [];
+  }
+  return (data ?? []) as AnimalWithPhotos[];
+}
+
 export async function getMyAnimals(userId: string): Promise<AnimalWithPhotos[]> {
   const supabase = await createClient();
   const { data, error } = await supabase

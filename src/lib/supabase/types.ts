@@ -38,6 +38,10 @@ export type Profile = {
   id: string;
   display_name: string | null;
   is_admin: boolean;
+  bio: string | null;
+  location_city: string | null;
+  location_region: string | null;
+  is_shelter: boolean;
   created_at: string;
 }
 
@@ -116,7 +120,9 @@ export type Database = {
       profiles: {
         Row: Profile;
         Insert: { id: string; display_name?: string | null };
-        Update: { display_name?: string | null };
+        Update: Partial<
+          Pick<Profile, "display_name" | "bio" | "location_city" | "location_region" | "is_shelter">
+        >;
         Relationships: [];
       };
       animals: {
